@@ -794,13 +794,25 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg-app);color:
   </div>
 
   <div class="section">
-    <div class="section-title">Show / Hide Markers</div>
+    <div class="section-title">TMC &amp; HMO Clinic Networks</div>
+    <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('tmc',this.checked)"><span class="comp-dot" style="background:#4a9eff"></span>TMC Hospitals &amp; Clinics</label>
     <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('hw',this.checked)"><span class="comp-dot" style="background:#f6ad55"></span>Healthway Medical</label>
     <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('hp',this.checked)"><span class="comp-dot" style="background:#fc8181"></span>Hi-Precision</label>
     <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('av',this.checked)"><span class="comp-dot" style="background:#68d391"></span>Avega</label>
     <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('mx',this.checked)"><span class="comp-dot" style="background:#76e4f7"></span>Maxicare PCCs</label>
     <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('md',this.checked)"><span class="comp-dot" style="background:#b794f4"></span>Medicard</label>
-    <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('tmc',this.checked)"><span class="comp-dot" style="background:#4a9eff"></span>TMC Hospitals &amp; Clinics</label>
+  </div>
+  <div class="section">
+    <div class="section-title">Hospital Groups</div>
+    <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('mph',this.checked)"><span class="comp-dot" style="background:#e53e3e"></span>Metro Pacific Health</label>
+    <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('ql',this.checked)"><span class="comp-dot" style="background:#38b2ac"></span>Qualimed / HW QualiMed</label>
+    <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('sl',this.checked)"><span class="comp-dot" style="background:#9f7aea"></span>St. Luke&apos;s Medical Center</label>
+    <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('ace',this.checked)"><span class="comp-dot" style="background:#ed8936"></span>ACE Medical Centers</label>
+    <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('mg',this.checked)"><span class="comp-dot" style="background:#4299e1"></span>Mount Grace Hospitals</label>
+  </div>
+  <div class="section">
+    <div class="section-title">Other Notable Hospitals</div>
+    <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('oth',this.checked)"><span class="comp-dot" style="background:#a0aec0"></span>Standalone / Gov&apos;t Hospitals</label>
   </div>
 
   <div id="opp-list">
@@ -846,11 +858,11 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg-app);color:
 </script>
 <script>
 const PD = [
-  {n:"Metro Manila",r:"NCR",lat:14.599,lng:120.984,pop:13484462,ic:0,pov:2.2,th:1,tc:35,hw:6,hp:8,av:8,mx:10,md:7},
+  {n:"Metro Manila",r:"NCR",lat:14.599,lng:120.984,pop:13484462,ic:0,pov:2.2,th:1,tc:35,hw:6,hp:8,av:8,mx:10,md:7,ch:20},
   {n:"Ilocos Norte",r:"Region I",lat:18.198,lng:120.594,pop:609588,ic:1,pov:10.5,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Ilocos Sur",r:"Region I",lat:17.575,lng:120.387,pop:699408,ic:1,pov:11.8,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"La Union",r:"Region I",lat:16.616,lng:120.317,pop:813159,ic:1,pov:9.5,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
-  {n:"Pangasinan",r:"Region I",lat:15.975,lng:120.232,pop:3163190,ic:1,pov:12.3,th:1,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
+  {n:"Pangasinan",r:"Region I",lat:15.975,lng:120.232,pop:3163190,ic:1,pov:12.3,th:1,tc:0,hw:0,hp:0,av:0,mx:0,md:0,ch:1},
   {n:"Batanes",r:"Region II",lat:20.448,lng:121.970,pop:17208,ic:5,pov:11.5,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Cagayan",r:"Region II",lat:17.613,lng:121.727,pop:1190305,ic:1,pov:13.8,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Isabela",r:"Region II",lat:17.149,lng:121.890,pop:1714588,ic:1,pov:13.3,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
@@ -858,15 +870,15 @@ const PD = [
   {n:"Quirino",r:"Region II",lat:16.513,lng:121.513,pop:196386,ic:3,pov:21.0,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Aurora",r:"Region III",lat:15.759,lng:121.562,pop:223245,ic:3,pov:26.5,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Bataan",r:"Region III",lat:14.674,lng:120.541,pop:868542,ic:1,pov:5.6,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
-  {n:"Bulacan",r:"Region III",lat:14.848,lng:120.811,pop:3292071,ic:1,pov:3.8,th:0,tc:3,hw:0,hp:0,av:0,mx:0,md:0},
-  {n:"Nueva Ecija",r:"Region III",lat:15.542,lng:121.085,pop:2310134,ic:1,pov:8.6,th:0,tc:2,hw:0,hp:0,av:0,mx:0,md:0},
-  {n:"Pampanga",r:"Region III",lat:15.029,lng:120.695,pop:2558543,ic:1,pov:4.2,th:1,tc:1,hw:0,hp:0,av:0,mx:0,md:1},
-  {n:"Tarlac",r:"Region III",lat:15.476,lng:120.596,pop:1413272,ic:1,pov:7.3,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
-  {n:"Zambales",r:"Region III",lat:15.326,lng:119.977,pop:688429,ic:1,pov:6.9,th:0,tc:1,hw:0,hp:0,av:0,mx:0,md:0},
-  {n:"Batangas",r:"CALABARZON",lat:13.757,lng:121.058,pop:2908494,ic:1,pov:6.1,th:0,tc:1,hw:0,hp:0,av:0,mx:0,md:0},
-  {n:"Cavite",r:"CALABARZON",lat:14.282,lng:120.864,pop:4344829,ic:1,pov:2.9,th:0,tc:1,hw:0,hp:0,av:0,mx:0,md:1},
-  {n:"Laguna",r:"CALABARZON",lat:14.280,lng:121.414,pop:3382193,ic:1,pov:2.8,th:1,tc:2,hw:0,hp:0,av:0,mx:1,md:1},
-  {n:"Quezon",r:"CALABARZON",lat:13.937,lng:121.617,pop:2075626,ic:1,pov:18.1,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
+  {n:"Bulacan",r:"Region III",lat:14.848,lng:120.811,pop:3292071,ic:1,pov:3.8,th:0,tc:3,hw:0,hp:0,av:0,mx:0,md:0,ch:3},
+  {n:"Nueva Ecija",r:"Region III",lat:15.542,lng:121.085,pop:2310134,ic:1,pov:8.6,th:0,tc:2,hw:0,hp:0,av:0,mx:0,md:0,ch:2},
+  {n:"Pampanga",r:"Region III",lat:15.029,lng:120.695,pop:2558543,ic:1,pov:4.2,th:1,tc:1,hw:0,hp:0,av:0,mx:0,md:1,ch:1},
+  {n:"Tarlac",r:"Region III",lat:15.476,lng:120.596,pop:1413272,ic:1,pov:7.3,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0,ch:1},
+  {n:"Zambales",r:"Region III",lat:15.326,lng:119.977,pop:688429,ic:1,pov:6.9,th:0,tc:1,hw:0,hp:0,av:0,mx:0,md:0,ch:1},
+  {n:"Batangas",r:"CALABARZON",lat:13.757,lng:121.058,pop:2908494,ic:1,pov:6.1,th:0,tc:1,hw:0,hp:0,av:0,mx:0,md:0,ch:1},
+  {n:"Cavite",r:"CALABARZON",lat:14.282,lng:120.864,pop:4344829,ic:1,pov:2.9,th:0,tc:1,hw:0,hp:0,av:0,mx:0,md:1,ch:4},
+  {n:"Laguna",r:"CALABARZON",lat:14.280,lng:121.414,pop:3382193,ic:1,pov:2.8,th:1,tc:2,hw:0,hp:0,av:0,mx:1,md:1,ch:4},
+  {n:"Quezon",r:"CALABARZON",lat:13.937,lng:121.617,pop:2075626,ic:1,pov:18.1,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0,ch:1},
   {n:"Rizal",r:"CALABARZON",lat:14.524,lng:121.179,pop:3330143,ic:1,pov:2.6,th:0,tc:4,hw:0,hp:2,av:0,mx:0,md:0},
   {n:"Marinduque",r:"MIMAROPA",lat:13.444,lng:121.842,pop:234521,ic:2,pov:24.3,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Occidental Mindoro",r:"MIMAROPA",lat:13.225,lng:120.596,pop:573378,ic:2,pov:26.0,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
@@ -883,34 +895,34 @@ const PD = [
   {n:"Antique",r:"Region VI",lat:10.754,lng:121.939,pop:604982,ic:2,pov:25.2,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Capiz",r:"Region VI",lat:11.587,lng:122.752,pop:779031,ic:2,pov:17.8,th:0,tc:1,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Guimaras",r:"Region VI",lat:10.600,lng:122.598,pop:177508,ic:3,pov:16.5,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
-  {n:"Iloilo",r:"Region VI",lat:10.697,lng:122.564,pop:2051899,ic:1,pov:18.4,th:1,tc:1,hw:0,hp:0,av:0,mx:0,md:0},
-  {n:"Negros Occidental",r:"Region VI",lat:10.671,lng:122.951,pop:2940492,ic:1,pov:16.3,th:0,tc:0,hw:0,hp:0,av:0,mx:1,md:0},
-  {n:"Bohol",r:"Region VII",lat:9.654,lng:123.854,pop:1394329,ic:1,pov:19.2,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
-  {n:"Cebu",r:"Region VII",lat:10.316,lng:123.885,pop:3352585,ic:1,pov:14.2,th:0,tc:1,hw:1,hp:0,av:0,mx:1,md:1},
+  {n:"Iloilo",r:"Region VI",lat:10.697,lng:122.564,pop:2051899,ic:1,pov:18.4,th:1,tc:1,hw:0,hp:0,av:0,mx:0,md:0,ch:3},
+  {n:"Negros Occidental",r:"Region VI",lat:10.671,lng:122.951,pop:2940492,ic:1,pov:16.3,th:0,tc:0,hw:0,hp:0,av:0,mx:1,md:0,ch:2},
+  {n:"Bohol",r:"Region VII",lat:9.654,lng:123.854,pop:1394329,ic:1,pov:19.2,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0,ch:1},
+  {n:"Cebu",r:"Region VII",lat:10.316,lng:123.885,pop:3352585,ic:1,pov:14.2,th:0,tc:1,hw:1,hp:0,av:0,mx:1,md:1,ch:5},
   {n:"Negros Oriental",r:"Region VII",lat:9.307,lng:123.305,pop:1448828,ic:1,pov:25.6,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Siquijor",r:"Region VII",lat:9.216,lng:123.513,pop:102621,ic:4,pov:21.4,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Biliran",r:"Region VIII",lat:11.562,lng:124.400,pop:179679,ic:3,pov:27.3,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Eastern Samar",r:"Region VIII",lat:11.608,lng:125.431,pop:472456,ic:2,pov:39.5,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
-  {n:"Leyte",r:"Region VIII",lat:11.254,lng:125.000,pop:1940061,ic:1,pov:23.4,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
+  {n:"Leyte",r:"Region VIII",lat:11.254,lng:125.000,pop:1940061,ic:1,pov:23.4,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0,ch:2},
   {n:"Northern Samar",r:"Region VIII",lat:12.459,lng:124.643,pop:641648,ic:2,pov:39.3,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Samar",r:"Region VIII",lat:11.775,lng:124.885,pop:773561,ic:1,pov:39.3,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Southern Leyte",r:"Region VIII",lat:10.133,lng:124.845,pop:446382,ic:2,pov:26.9,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Zamboanga del Norte",r:"Region IX",lat:8.588,lng:123.341,pop:1000898,ic:1,pov:32.6,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
-  {n:"Zamboanga del Sur",r:"Region IX",lat:7.828,lng:123.431,pop:1043518,ic:1,pov:25.5,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
+  {n:"Zamboanga del Sur",r:"Region IX",lat:7.828,lng:123.431,pop:1043518,ic:1,pov:25.5,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0,ch:1},
   {n:"Zamboanga Sibugay",r:"Region IX",lat:7.786,lng:122.588,pop:714862,ic:2,pov:28.3,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Bukidnon",r:"Region X",lat:8.158,lng:125.127,pop:1541308,ic:1,pov:27.1,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Camiguin",r:"Region X",lat:9.255,lng:124.713,pop:90987,ic:4,pov:24.0,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Lanao del Norte",r:"Region X",lat:7.991,lng:123.816,pop:1041078,ic:1,pov:25.0,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Misamis Occidental",r:"Region X",lat:8.480,lng:123.799,pop:621002,ic:2,pov:16.7,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
-  {n:"Misamis Oriental",r:"Region X",lat:8.454,lng:124.632,pop:714102,ic:1,pov:9.0,th:0,tc:0,hw:1,hp:0,av:0,mx:1,md:0},
+  {n:"Misamis Oriental",r:"Region X",lat:8.454,lng:124.632,pop:714102,ic:1,pov:9.0,th:0,tc:0,hw:1,hp:0,av:0,mx:1,md:0,ch:2},
   {n:"Davao de Oro",r:"Region XI",lat:7.602,lng:125.963,pop:804697,ic:1,pov:28.4,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
-  {n:"Davao del Norte",r:"Region XI",lat:7.448,lng:125.808,pop:1039637,ic:1,pov:12.5,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
-  {n:"Davao del Sur",r:"Region XI",lat:6.750,lng:125.357,pop:1097605,ic:1,pov:5.7,th:0,tc:0,hw:1,hp:0,av:0,mx:0,md:1},
+  {n:"Davao del Norte",r:"Region XI",lat:7.448,lng:125.808,pop:1039637,ic:1,pov:12.5,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0,ch:1},
+  {n:"Davao del Sur",r:"Region XI",lat:6.750,lng:125.357,pop:1097605,ic:1,pov:5.7,th:0,tc:0,hw:1,hp:0,av:0,mx:0,md:1,ch:2},
   {n:"Davao Occidental",r:"Region XI",lat:6.055,lng:125.468,pop:328419,ic:2,pov:18.4,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Davao Oriental",r:"Region XI",lat:6.949,lng:126.230,pop:543451,ic:2,pov:27.3,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Cotabato",r:"Region XII",lat:7.008,lng:125.089,pop:1378996,ic:1,pov:33.6,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Sarangani",r:"Region XII",lat:6.101,lng:125.153,pop:554645,ic:2,pov:39.8,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
-  {n:"South Cotabato",r:"Region XII",lat:6.503,lng:124.847,pop:920549,ic:1,pov:20.2,th:0,tc:1,hw:0,hp:0,av:0,mx:0,md:0},
+  {n:"South Cotabato",r:"Region XII",lat:6.503,lng:124.847,pop:920549,ic:1,pov:20.2,th:0,tc:1,hw:0,hp:0,av:0,mx:0,md:0,ch:2},
   {n:"Sultan Kudarat",r:"Region XII",lat:6.632,lng:124.597,pop:828049,ic:2,pov:35.1,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Agusan del Norte",r:"Region XIII",lat:8.948,lng:125.541,pop:461002,ic:2,pov:22.4,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Agusan del Sur",r:"Region XIII",lat:8.601,lng:125.913,pop:855862,ic:2,pov:33.1,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
@@ -935,7 +947,8 @@ function calcScore(p){
   const popScore=Math.sqrt(p.pop/800000);
   const incomeW={0:0.7,1:1.0,2:1.4,3:1.1,4:0.5,5:0.2,6:0.1}[p.ic]??0.5;
   const povMod=Math.max(0.05,1-(Math.max(0,p.pov-5)/100)*1.8);
-  const totalPer100k=(p.th*4+p.tc+(p.hw+p.hp+p.av+p.mx+p.md)*0.6)/(p.pop/100000);
+  const ch=p.ch||0;
+  const totalPer100k=(p.th*4+p.tc+(p.hw+p.hp+p.av+p.mx+p.md)*0.6+ch*2.5)/(p.pop/100000);
   const gap=1/(totalPer100k+0.25);
   return popScore*incomeW*povMod*gap;
 }
@@ -1054,7 +1067,97 @@ const COMP_PTS=[
   {g:'md',n:'Medicard',city:'Cebu City',lat:10.320,lng:123.900,cnt:1},
   {g:'md',n:'Medicard',city:'Davao City',lat:7.200,lng:125.460,cnt:1},
 ];
+// ── Metro Pacific Health ──
+const MPH_PTS=[
+  {n:'Metro Pacific Health',city:'Makati Medical Center, Makati',lat:14.563,lng:121.015},
+  {n:'Metro Pacific Health',city:'Cardinal Santos Medical Center, San Juan',lat:14.604,lng:121.015},
+  {n:'Metro Pacific Health',city:'Asian Hospital & Medical Center, Alabang',lat:14.416,lng:121.027},
+  {n:'Metro Pacific Health',city:'De Los Santos Medical Center, QC',lat:14.636,lng:121.030},
+  {n:'Metro Pacific Health',city:'Marikina Valley Medical Center',lat:14.648,lng:121.107},
+  {n:'Metro Pacific Health',city:'Our Lady of Lourdes Hospital, Manila',lat:14.592,lng:120.981},
+  {n:'Metro Pacific Health',city:'Commonwealth Hospital, QC',lat:14.694,lng:121.056},
+  {n:'Metro Pacific Health',city:'Paranaque Doctors Hospital',lat:14.477,lng:121.019},
+  {n:'Metro Pacific Health',city:'Medical Center Imus, Cavite',lat:14.421,lng:120.937},
+  {n:'Metro Pacific Health',city:'City of Gen. Trias Doctors, Cavite',lat:14.388,lng:120.882},
+  {n:'Metro Pacific Health',city:'Calamba Medical Center, Laguna',lat:14.218,lng:121.160},
+  {n:'Metro Pacific Health',city:'Los Banos Doctors Hospital, Laguna',lat:14.167,lng:121.246},
+  {n:'Metro Pacific Health',city:'Sacred Heart Hospital of Malolos, Bulacan',lat:14.843,lng:120.811},
+  {n:'Metro Pacific Health',city:'Central Luzon Doctors Hospital, Tarlac',lat:15.467,lng:120.589},
+  {n:'Metro Pacific Health',city:'Lucena United Doctors Hospital, Quezon',lat:13.936,lng:121.617},
+  {n:'Metro Pacific Health',city:'Riverside Medical Center, Bacolod',lat:10.667,lng:122.944},
+  {n:'Metro Pacific Health',city:'Davao Doctors Hospital, Davao City',lat:7.066,lng:125.607},
+  {n:'Metro Pacific Health',city:'St. Elizabeth Hospital, General Santos',lat:6.113,lng:125.175},
+];
+// ── Qualimed / Healthway QualiMed ──
+const QL_PTS=[
+  {n:'Qualimed',city:'HW QualiMed Manila (UP-PGH)',lat:14.565,lng:121.016},
+  {n:'Qualimed',city:'HW QualiMed Sta. Rosa, Laguna',lat:14.311,lng:121.112},
+  {n:'Qualimed',city:'HW QualiMed San Jose del Monte, Bulacan',lat:14.813,lng:121.008},
+  {n:'Qualimed',city:'HW QualiMed Iloilo City',lat:10.720,lng:122.562},
+  {n:'Qualimed',city:'Qualimed Imus, Cavite',lat:14.421,lng:120.937},
+  {n:'Qualimed',city:'Qualimed Dasmariñas, Cavite',lat:14.330,lng:120.937},
+  {n:'Qualimed',city:'Qualimed Clark, Pampanga',lat:15.177,lng:120.543},
+  {n:'Qualimed',city:'Qualimed Tagum, Davao del Norte',lat:7.447,lng:125.807},
+  {n:'Qualimed',city:'Qualimed General Santos City',lat:6.113,lng:125.175},
+  {n:'Qualimed',city:'Qualimed Bacolod, Negros Occidental',lat:10.667,lng:122.944},
+];
+// ── St. Luke's ──
+const SL_PTS=[
+  {n:"St. Luke's Medical Center",city:'Quezon City (main campus)',lat:14.638,lng:121.034},
+  {n:"St. Luke's Medical Center",city:'BGC, Taguig',lat:14.548,lng:121.047},
+];
+// ── ACE Medical Centers ──
+const ACE_PTS=[
+  {n:'ACE Medical Center',city:'Quezon City',lat:14.639,lng:121.034},
+  {n:'ACE Medical Center',city:'Valenzuela, NCR',lat:14.724,lng:120.983},
+  {n:'ACE Medical Center',city:'Pateros, NCR',lat:14.549,lng:121.068},
+  {n:'ACE Medical Center',city:'Dagupan City, Pangasinan',lat:15.996,lng:120.334},
+  {n:'ACE Medical Center',city:'Subic Bay Freeport, Zambales',lat:14.822,lng:120.283},
+  {n:'ACE Medical Center',city:'Cebu City',lat:10.316,lng:123.885},
+  {n:'ACE Medical Center',city:'Tagbilaran City, Bohol',lat:9.654,lng:123.854},
+  {n:'ACE Medical Center',city:'Tacloban City, Leyte',lat:11.244,lng:124.999},
+  {n:'ACE Medical Center',city:'Cagayan de Oro City',lat:8.490,lng:124.638},
+];
+// ── Mount Grace Partner Hospitals ──
+const MG_PTS=[
+  {n:'Mount Grace Hospitals',city:'Fe Del Mundo Medical Center, Quezon City',lat:14.637,lng:121.006},
+  {n:'Mount Grace Hospitals',city:'Capitol Medical Center, Quezon City',lat:14.637,lng:121.028},
+  {n:'Mount Grace Hospitals',city:'VRP Medical Center, Mandaluyong',lat:14.579,lng:121.036},
+  {n:'Mount Grace Hospitals',city:'GoodSam Medical Center, Cabanatuan / Gapan, Nueva Ecija',lat:15.486,lng:120.966},
+  {n:'Mount Grace Hospitals',city:'Grace Medical Center, San Jose del Monte, Bulacan',lat:14.813,lng:121.009},
+  {n:'Mount Grace Hospitals',city:'Westlake Medical Center, San Pedro, Laguna',lat:14.350,lng:121.052},
+  {n:'Mount Grace Hospitals',city:'The Doctors Hospital, Bacolod',lat:10.667,lng:122.944},
+  {n:'Mount Grace Hospitals',city:'Gatchalian Medical Center, Ormoc, Leyte',lat:11.006,lng:124.609},
+  {n:'Mount Grace Hospitals',city:'Ciudad Medical Zamboanga',lat:6.910,lng:122.073},
+  {n:'Mount Grace Hospitals',city:'Tagaytay Medical Center, Batangas/Cavite border',lat:14.107,lng:120.962},
+  {n:'Mount Grace Hospitals',city:'Hospital, Lapu-Lapu City, Cebu',lat:10.311,lng:123.951},
+];
+// ── Other Notable / Government Hospitals ──
+const OTH_PTS=[
+  {n:'Philippine General Hospital',city:'Manila (Government — largest in PH)',lat:14.565,lng:120.993},
+  {n:'University of Santo Tomas Hospital',city:'Manila',lat:14.610,lng:121.006},
+  {n:'Chinese General Hospital',city:'Manila',lat:14.596,lng:120.977},
+  {n:'Perpetual Help Medical Center',city:'Las Piñas, NCR',lat:14.451,lng:120.992},
+  {n:'Philippine Heart Center',city:'Quezon City (Government specialty)',lat:14.634,lng:121.044},
+  {n:'National Kidney Transplant Institute',city:'Quezon City (Government specialty)',lat:14.633,lng:121.043},
+  {n:'Manila Doctors Hospital',city:'Manila',lat:14.580,lng:120.984},
+  {n:'Makati Medical Center',city:'Makati (part of MPH group)',lat:14.563,lng:121.015},
+  {n:'Asian Hospital & Medical Center',city:'Alabang, Muntinlupa (part of MPH)',lat:14.416,lng:121.027},
+  {n:'St. Luke's Medical Center',city:'Quezon City',lat:14.638,lng:121.034},
+  {n:'Chong Hua Hospital',city:'Cebu City',lat:10.316,lng:123.890},
+  {n:'Cebu Doctors University Hospital',city:'Cebu City',lat:10.292,lng:123.897},
+  {n:'Perpetual Succour Hospital',city:'Cebu City',lat:10.320,lng:123.887},
+  {n:'Vicente Sotto Memorial Medical Center',city:'Cebu City (Government)',lat:10.308,lng:123.888},
+  {n:'Southern Philippines Medical Center',city:'Davao City (Government)',lat:7.069,lng:125.612},
+  {n:'Davao Medical School Foundation Hospital',city:'Davao City',lat:7.062,lng:125.608},
+  {n:'Capitol University Medical Center',city:'Cagayan de Oro City',lat:8.490,lng:124.638},
+  {n:'Iloilo Doctors Hospital',city:'Iloilo City',lat:10.697,lng:122.564},
+  {n:'Western Visayas Medical Center',city:'Iloilo City (Government)',lat:10.720,lng:122.562},
+  {n:'Bicol Medical Center',city:'Legazpi City, Albay (Government)',lat:13.139,lng:123.744},
+  {n:'Batangas Medical Center',city:'Batangas City (Government)',lat:13.757,lng:121.058},
+];
 const COMP_COLORS={hw:'#f6ad55',hp:'#fc8181',av:'#68d391',mx:'#76e4f7',md:'#b794f4'};
+const HOSP_COLORS={mph:'#e53e3e',ql:'#38b2ac',sl:'#9f7aea',ace:'#ed8936',mg:'#4299e1',oth:'#a0aec0'};
 
 // ── THEME ──
 let isDark=true;
@@ -1081,7 +1184,7 @@ function swapTiles(){
 
 // ── MAP INIT ──
 let curLayer='opportunity';
-const markerGroups={hw:[],hp:[],av:[],mx:[],md:[],tmc:[]};
+const markerGroups={hw:[],hp:[],av:[],mx:[],md:[],tmc:[],mph:[],ql:[],sl:[],ace:[],mg:[],oth:[]};
 let provMarkers=[];
 
 const map=L.map('map',{center:[12.0,122.0],zoom:6,minZoom:5,maxZoom:13,zoomControl:false});
@@ -1146,6 +1249,40 @@ function buildSiteMarkers(){
     m.bindPopup(`<b>${c.n}</b><br><small>${c.city}</small> &middot; ${c.cnt} site${c.cnt>1?'s':''}`);
     markerGroups[c.g].push(m);
   });
+  // Hospital group markers
+  function hospIcon(col){
+    return makeIcon(`<div style="background:${col}18;border:2px solid ${col};border-radius:4px;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px;box-shadow:0 0 5px ${col}55">&#127973;</div>`,[20,20]);
+  }
+  MPH_PTS.forEach(h=>{
+    const m=L.marker([h.lat,h.lng],{icon:hospIcon(HOSP_COLORS.mph)}).addTo(map);
+    m.bindPopup(`<b style="color:#e53e3e">&#9632; ${h.n}</b><br><small>${h.city}</small>`);
+    markerGroups.mph.push(m);
+  });
+  QL_PTS.forEach(h=>{
+    const m=L.marker([h.lat,h.lng],{icon:hospIcon(HOSP_COLORS.ql)}).addTo(map);
+    m.bindPopup(`<b style="color:#38b2ac">&#9632; ${h.n}</b><br><small>${h.city}</small>`);
+    markerGroups.ql.push(m);
+  });
+  SL_PTS.forEach(h=>{
+    const m=L.marker([h.lat,h.lng],{icon:hospIcon(HOSP_COLORS.sl)}).addTo(map);
+    m.bindPopup(`<b style="color:#9f7aea">&#9632; ${h.n}</b><br><small>${h.city}</small>`);
+    markerGroups.sl.push(m);
+  });
+  ACE_PTS.forEach(h=>{
+    const m=L.marker([h.lat,h.lng],{icon:hospIcon(HOSP_COLORS.ace)}).addTo(map);
+    m.bindPopup(`<b style="color:#ed8936">&#9632; ${h.n}</b><br><small>${h.city}</small>`);
+    markerGroups.ace.push(m);
+  });
+  MG_PTS.forEach(h=>{
+    const m=L.marker([h.lat,h.lng],{icon:hospIcon(HOSP_COLORS.mg)}).addTo(map);
+    m.bindPopup(`<b style="color:#4299e1">&#9632; ${h.n}</b><br><small>${h.city}</small>`);
+    markerGroups.mg.push(m);
+  });
+  OTH_PTS.forEach(h=>{
+    const m=L.marker([h.lat,h.lng],{icon:hospIcon(HOSP_COLORS.oth)}).addTo(map);
+    m.bindPopup(`<b style="color:#718096">&#9632; ${h.n}</b><br><small>${h.city}</small>`);
+    markerGroups.oth.push(m);
+  });
 }
 
 // ── CONTROLS ──
@@ -1190,7 +1327,8 @@ function showInfo(p){
     <div class="irow"><span class="il">Avega</span><span class="iv ${p.av?'w':'g'}">${p.av}</span></div>
     <div class="irow"><span class="il">Maxicare PCCs</span><span class="iv ${p.mx?'w':'g'}">${p.mx}</span></div>
     <div class="irow"><span class="il">Medicard</span><span class="iv ${p.md?'w':'g'}">${p.md}</span></div>
-    <div class="irow"><span class="il">All Competitors</span><span class="iv ${cc}">${comp}</span></div>`;
+    <div class="irow"><span class="il">All Competitors</span><span class="iv ${cc}">${comp}</span></div>
+    <div class="irow"><span class="il">Competitor Hospitals</span><span class="iv ${p.ch?'b':'g'}">${p.ch||0}</span></div>`;
   const s=p.score;
   const fc=s>70?'#d73027':s>50?'#f46d43':s>35?'#fdae61':s>20?'#38a169':'#3182ce';
   document.getElementById('ifill').style.cssText=`width:${s}%;background:${fc}`;
