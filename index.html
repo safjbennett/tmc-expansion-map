@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -667,85 +667,132 @@ svg.leaflet-image-layer.leaflet-interactive path {
 		}
 	}
 
+/* ── THEME VARIABLES ── */
+:root {
+  --bg-app:#0f1724; --bg-sidebar:#161f35; --bg-section:#1e2d4a;
+  --bg-item:#1e2d4a; --bg-item-hover:#243050; --bg-active:#1a3a6e;
+  --border:#1e2d4a; --border2:#2d4070; --border-active:#4a9eff;
+  --text-primary:#e2e8f0; --text-muted:#5a6a85; --text-accent:#63b3ed;
+  --text-active:#cce5ff; --text-strong:#d4e5f9;
+  --info-bg:rgba(13,20,38,.97); --legend-bg:rgba(13,20,38,.95);
+  --note-bg:rgba(13,20,38,.85); --map-bg:#0d1928;
+  --popup-bg:#161f35; --popup-tip:#161f35;
+  --tooltip-bg:#0d1928; --tooltip-border:#243050; --tooltip-text:#d4e5f9;
+  --row-border:#1e2d4a; --il:#5a6a85;
+  --bubble-stroke:rgba(255,255,255,0.25);
+  --scrollbar-thumb:#2d4070;
+}
+[data-theme="light"] {
+  --bg-app:#f0f4f8; --bg-sidebar:#ffffff; --bg-section:#f7fafc;
+  --bg-item:#edf2f7; --bg-item-hover:#e2ecf9; --bg-active:#ebf4ff;
+  --border:#e2e8f0; --border2:#bee3f8; --border-active:#3182ce;
+  --text-primary:#1a202c; --text-muted:#718096; --text-accent:#2563eb;
+  --text-active:#1e40af; --text-strong:#1a202c;
+  --info-bg:rgba(255,255,255,0.98); --legend-bg:rgba(240,244,248,0.98);
+  --note-bg:rgba(240,244,248,0.92); --map-bg:#dde8f0;
+  --popup-bg:#ffffff; --popup-tip:#ffffff;
+  --tooltip-bg:#ffffff; --tooltip-border:#e2e8f0; --tooltip-text:#1a202c;
+  --row-border:#e2e8f0; --il:#718096;
+  --bubble-stroke:rgba(0,0,0,0.35);
+  --scrollbar-thumb:#bee3f8;
+}
+/* ── BASE ── */
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f1724;color:#e2e8f0;height:100vh;display:flex;overflow:hidden}
-#sidebar{width:310px;min-width:310px;background:#161f35;display:flex;flex-direction:column;overflow:hidden;z-index:1000;box-shadow:3px 0 15px rgba(0,0,0,.5)}
-#sidebar-header{padding:14px 16px;background:#0f1724;border-bottom:1px solid #1e2d4a}
-#sidebar-header h1{font-size:13px;font-weight:700;color:#63b3ed;letter-spacing:.8px;text-transform:uppercase}
-#sidebar-header p{font-size:11px;color:#5a6a85;margin-top:3px}
-.section{padding:10px 14px;border-bottom:1px solid #1e2d4a}
-.section-title{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:#5a6a85;margin-bottom:8px;font-weight:600}
-.layer-btn{display:block;width:100%;padding:7px 10px;margin-bottom:4px;background:#1e2d4a;border:1px solid #2d4070;border-radius:6px;color:#8ba3c7;font-size:12px;cursor:pointer;text-align:left;transition:all .15s}
-.layer-btn.active{background:#1a3a6e;border-color:#4a9eff;color:#cce5ff}
-.layer-btn:hover:not(.active){background:#243050}
-.comp-row{display:flex;align-items:center;gap:7px;padding:4px 0;font-size:12px;cursor:pointer;color:#8ba3c7}
-.comp-row:hover{color:#c4d8ef}
-.comp-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;border:1px solid rgba(255,255,255,.25)}
-.comp-row input{cursor:pointer;accent-color:#63b3ed;width:13px;height:13px}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg-app);color:var(--text-primary);height:100vh;display:flex;overflow:hidden;transition:background .3s,color .3s}
+/* ── SIDEBAR ── */
+#sidebar{width:310px;min-width:310px;background:var(--bg-sidebar);display:flex;flex-direction:column;overflow:hidden;z-index:1000;box-shadow:3px 0 15px rgba(0,0,0,.2);transition:background .3s}
+#sidebar-header{padding:12px 16px;background:var(--bg-app);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;transition:background .3s}
+#sidebar-header h1{font-size:13px;font-weight:700;color:var(--text-accent);letter-spacing:.8px;text-transform:uppercase}
+#sidebar-header p{font-size:10px;color:var(--text-muted);margin-top:2px}
+#theme-toggle{background:var(--bg-item);border:1px solid var(--border2);border-radius:20px;padding:4px 10px;cursor:pointer;font-size:14px;color:var(--text-accent);transition:all .2s;white-space:nowrap}
+#theme-toggle:hover{background:var(--bg-active)}
+.section{padding:10px 14px;border-bottom:1px solid var(--border);transition:border-color .3s}
+.section-title{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin-bottom:8px;font-weight:600}
+.layer-btn{display:block;width:100%;padding:7px 10px;margin-bottom:4px;background:var(--bg-item);border:1px solid var(--border2);border-radius:6px;color:var(--text-muted);font-size:12px;cursor:pointer;text-align:left;transition:all .15s}
+.layer-btn.active{background:var(--bg-active);border-color:var(--border-active);color:var(--text-active);font-weight:600}
+.layer-btn:hover:not(.active){background:var(--bg-item-hover)}
+.comp-row{display:flex;align-items:center;gap:7px;padding:4px 0;font-size:12px;cursor:pointer;color:var(--text-muted);transition:color .15s}
+.comp-row:hover{color:var(--text-primary)}
+.comp-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;border:1px solid rgba(128,128,128,.3)}
+.comp-row input{cursor:pointer;accent-color:var(--text-accent);width:13px;height:13px}
 #opp-list{flex:1;overflow-y:auto;padding:10px 14px}
 #opp-list::-webkit-scrollbar{width:4px}
-#opp-list::-webkit-scrollbar-track{background:#0f1724}
-#opp-list::-webkit-scrollbar-thumb{background:#2d4070;border-radius:2px}
-.opp-item{padding:8px 10px;background:#1e2d4a;border-radius:6px;margin-bottom:5px;cursor:pointer;border-left:3px solid transparent;transition:all .15s}
-.opp-item:hover{background:#243050;transform:translateX(2px)}
-.opp-item.t1{border-left-color:#d73027}
-.opp-item.t2{border-left-color:#f46d43}
-.opp-item.t3{border-left-color:#fdae61}
-.opp-item.t4{border-left-color:#68d391}
-.opp-rank{font-size:10px;color:#5a6a85}
-.opp-name{font-size:13px;font-weight:600;color:#d4e5f9;margin:1px 0}
-.opp-meta{font-size:11px;color:#5a6a85;display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
-.opp-score-num{font-weight:700;color:#68d391}
-.opp-bar{height:3px;background:#2d4070;border-radius:2px;margin-top:4px;overflow:hidden}
+#opp-list::-webkit-scrollbar-track{background:var(--bg-app)}
+#opp-list::-webkit-scrollbar-thumb{background:var(--scrollbar-thumb);border-radius:2px}
+.opp-item{padding:8px 10px;background:var(--bg-item);border-radius:6px;margin-bottom:5px;cursor:pointer;border-left:3px solid transparent;transition:all .15s}
+.opp-item:hover{background:var(--bg-item-hover);transform:translateX(2px)}
+.opp-item.t1{border-left-color:#d73027}.opp-item.t2{border-left-color:#f46d43}
+.opp-item.t3{border-left-color:#fdae61}.opp-item.t4{border-left-color:#68d391}
+.opp-rank{font-size:10px;color:var(--text-muted)}
+.opp-name{font-size:13px;font-weight:600;color:var(--text-strong);margin:1px 0}
+.opp-meta{font-size:11px;color:var(--text-muted);display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+.opp-score-num{font-weight:700;color:#38a169}
+.opp-bar{height:3px;background:var(--border2);border-radius:2px;margin-top:4px;overflow:hidden}
 .opp-bar-fill{height:100%;border-radius:2px}
+/* ── MAP ── */
 #map-wrap{flex:1;position:relative}
 #map{width:100%;height:100%}
-#info{position:absolute;top:12px;right:12px;width:270px;background:rgba(13,20,38,.97);border:1px solid #243050;border-radius:10px;padding:14px;z-index:1000;display:none;box-shadow:0 4px 24px rgba(0,0,0,.7)}
-#info h3{font-size:15px;font-weight:700;color:#63b3ed;padding-right:22px;margin-bottom:2px}
-.rtag{font-size:10px;color:#5a6a85;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
-#info-close{position:absolute;top:10px;right:12px;background:none;border:none;color:#5a6a85;cursor:pointer;font-size:20px;line-height:1}
-#info-close:hover{color:#e2e8f0}
-.irow{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #1e2d4a;font-size:12px}
+.leaflet-container{background:var(--map-bg)!important}
+/* ── INFO PANEL ── */
+#info{position:absolute;top:12px;right:12px;width:275px;background:var(--info-bg);border:1px solid var(--border);border-radius:10px;padding:14px;z-index:1000;display:none;box-shadow:0 4px 24px rgba(0,0,0,.25);backdrop-filter:blur(6px)}
+#info h3{font-size:15px;font-weight:700;color:var(--text-accent);padding-right:22px;margin-bottom:2px}
+.rtag{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+#info-close{position:absolute;top:10px;right:12px;background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:20px;line-height:1}
+#info-close:hover{color:var(--text-primary)}
+.irow{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--row-border);font-size:12px}
 .irow:last-of-type{border:none}
-.il{color:#5a6a85}.iv{color:#d4e5f9;font-weight:600}
-.iv.g{color:#68d391}.iv.w{color:#f6ad55}.iv.b{color:#fc8181}
-.opp-section{margin-top:10px;padding-top:10px;border-top:1px solid #1e2d4a}
-.opp-lbl{font-size:10px;color:#5a6a85;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
-.opp-track{height:10px;background:#1e2d4a;border-radius:5px;overflow:hidden}
+.il{color:var(--il)}.iv{color:var(--text-strong);font-weight:600}
+.iv.g{color:#38a169}.iv.w{color:#d97706}.iv.b{color:#dc2626}
+.opp-section{margin-top:10px;padding-top:10px;border-top:1px solid var(--row-border)}
+.opp-lbl{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.opp-track{height:10px;background:var(--bg-item);border-radius:5px;overflow:hidden}
 .opp-fill{height:100%;border-radius:5px}
 .opp-num{font-size:14px;font-weight:700;margin-top:4px}
 .verdict{margin-top:8px;padding:8px 10px;border-radius:6px;font-size:11px;line-height:1.5}
-.v-high{background:rgba(215,48,39,.12);border:1px solid rgba(215,48,39,.3);color:#faa58a}
-.v-med{background:rgba(244,109,67,.12);border:1px solid rgba(244,109,67,.3);color:#fbd38d}
-.v-low{background:rgba(104,211,145,.1);border:1px solid rgba(104,211,145,.2);color:#9ae6b4}
-#legend{position:absolute;bottom:20px;right:12px;background:rgba(13,20,38,.95);border:1px solid #243050;border-radius:8px;padding:12px 14px;z-index:1000;min-width:160px}
-#legend h4{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:#5a6a85;margin-bottom:8px}
-.lrow{display:flex;align-items:center;gap:7px;margin-bottom:4px;font-size:11px;color:#8ba3c7}
+.v-high{background:rgba(215,48,39,.1);border:1px solid rgba(215,48,39,.3);color:#c53030}
+.v-med{background:rgba(217,119,6,.1);border:1px solid rgba(217,119,6,.3);color:#92400e}
+.v-low{background:rgba(56,161,105,.1);border:1px solid rgba(56,161,105,.25);color:#276749}
+[data-theme="dark"] .v-high{color:#faa58a}
+[data-theme="dark"] .v-med{color:#fbd38d}
+[data-theme="dark"] .v-low{color:#9ae6b4}
+/* ── LEGEND ── */
+#legend{position:absolute;bottom:20px;right:12px;background:var(--legend-bg);border:1px solid var(--border);border-radius:8px;padding:12px 14px;z-index:1000;min-width:180px;backdrop-filter:blur(6px)}
+#legend h4{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted);margin-bottom:8px}
+.lrow{display:flex;align-items:center;gap:7px;margin-bottom:4px;font-size:11px;color:var(--text-muted)}
 .lsw{width:14px;height:10px;border-radius:2px;flex-shrink:0}
-#note{position:absolute;bottom:20px;left:12px;background:rgba(13,20,38,.85);border:1px solid #243050;border-radius:6px;padding:8px 12px;font-size:10px;color:#5a6a85;z-index:1000;max-width:220px;line-height:1.4}
-.leaflet-tooltip{background:#0d1928;border:1px solid #243050;color:#d4e5f9;border-radius:6px;font-size:12px;padding:5px 8px;box-shadow:0 2px 8px rgba(0,0,0,.5)}
-.leaflet-tooltip-top:before{border-top-color:#0d1928}
-.leaflet-popup-content-wrapper{background:#161f35;border:1px solid #243050;color:#d4e5f9;border-radius:8px}
-.leaflet-popup-tip{background:#161f35}
-.leaflet-container{background:#0d1928!important}
+#note{position:absolute;bottom:20px;left:12px;background:var(--note-bg);border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-size:10px;color:var(--text-muted);z-index:1000;max-width:220px;line-height:1.4;backdrop-filter:blur(4px)}
+/* ── LEAFLET OVERRIDES ── */
+.leaflet-tooltip{background:var(--tooltip-bg);border:1px solid var(--tooltip-border);color:var(--tooltip-text);border-radius:6px;font-size:12px;padding:5px 8px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.leaflet-tooltip-top:before{border-top-color:var(--tooltip-border)}
+.leaflet-popup-content-wrapper{background:var(--popup-bg);border:1px solid var(--border);color:var(--text-primary);border-radius:8px}
+.leaflet-popup-tip{background:var(--popup-tip)}
+.leaflet-control-zoom a{background:var(--bg-sidebar)!important;color:var(--text-primary)!important;border-color:var(--border)!important}
+.leaflet-control-zoom a:hover{background:var(--bg-item-hover)!important}
+.leaflet-control-attribution{background:var(--note-bg)!important;color:var(--text-muted)!important}
 </style>
 </head>
 <body>
 
 <div id="sidebar">
   <div id="sidebar-header">
-    <h1>TMC Expansion Tool</h1>
-    <p>Strategic site selection · Province-level analysis</p>
+    <div>
+      <h1>TMC Expansion Tool</h1>
+      <p>Strategic site selection · Province analysis</p>
+    </div>
+    <button id="theme-toggle" onclick="toggleTheme()">🌙 Dark</button>
   </div>
+
   <div class="section">
     <div class="section-title">Map Layer (bubble colour)</div>
     <button class="layer-btn active" onclick="setLayer('opportunity',this)">🎯 Opportunity Score</button>
+    <button class="layer-btn" onclick="setLayer('market',this)">🌡️ Market Potential</button>
     <button class="layer-btn" onclick="setLayer('population',this)">👥 Population (2020)</button>
     <button class="layer-btn" onclick="setLayer('income',this)">💰 Income Class (PSA)</button>
     <button class="layer-btn" onclick="setLayer('poverty',this)">📉 Poverty Rate</button>
     <button class="layer-btn" onclick="setLayer('tmc',this)">🏥 TMC Presence</button>
     <button class="layer-btn" onclick="setLayer('competition',this)">⚔️ Competitor Density</button>
   </div>
+
   <div class="section">
     <div class="section-title">Show / Hide Markers</div>
     <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('hw',this.checked)"><span class="comp-dot" style="background:#f6ad55"></span>Healthway Medical</label>
@@ -755,6 +802,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f1724;color:#e2e8f
     <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('md',this.checked)"><span class="comp-dot" style="background:#b794f4"></span>Medicard</label>
     <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('tmc',this.checked)"><span class="comp-dot" style="background:#4a9eff"></span>TMC Hospitals &amp; Clinics</label>
   </div>
+
   <div id="opp-list">
     <div class="section-title" style="margin-bottom:10px">Top Expansion Opportunities</div>
     <div id="rankings"></div>
@@ -763,6 +811,7 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f1724;color:#e2e8f
 
 <div id="map-wrap">
   <div id="map"></div>
+
   <div id="info">
     <button id="info-close" onclick="document.getElementById('info').style.display='none'">&#215;</button>
     <h3 id="iname"></h3>
@@ -775,12 +824,14 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f1724;color:#e2e8f
       <div class="verdict" id="iverdict"></div>
     </div>
   </div>
+
   <div id="legend">
     <h4 id="ltitle">Opportunity Score</h4>
     <div id="lbody"></div>
   </div>
+
   <div id="note">
-    Bubble size = population · Colour = selected metric<br>
+    Bubble size = population &middot; Colour = selected layer<br>
     Click any bubble for full province breakdown
   </div>
 </div>
@@ -794,27 +845,17 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#0f1724;color:#e2e8f
 //# sourceMappingURL=leaflet.js.map
 </script>
 <script>
-// ══════════════════════════════════════════════
-// PROVINCE DATA — PSA 2020 Census + income/poverty data
-// ic: 0=NCR/Special, 1=highest income … 6=lowest
-// pov: poverty rate %; th=TMC hospitals; tc=TMC clinics
-// hw/hp/av/mx/md: competitor counts
-// ══════════════════════════════════════════════
 const PD = [
-  // NCR
   {n:"Metro Manila",r:"NCR",lat:14.599,lng:120.984,pop:13484462,ic:0,pov:2.2,th:1,tc:35,hw:6,hp:8,av:8,mx:10,md:7},
-  // Region I
   {n:"Ilocos Norte",r:"Region I",lat:18.198,lng:120.594,pop:609588,ic:1,pov:10.5,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Ilocos Sur",r:"Region I",lat:17.575,lng:120.387,pop:699408,ic:1,pov:11.8,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"La Union",r:"Region I",lat:16.616,lng:120.317,pop:813159,ic:1,pov:9.5,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Pangasinan",r:"Region I",lat:15.975,lng:120.232,pop:3163190,ic:1,pov:12.3,th:1,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
-  // Region II
   {n:"Batanes",r:"Region II",lat:20.448,lng:121.970,pop:17208,ic:5,pov:11.5,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Cagayan",r:"Region II",lat:17.613,lng:121.727,pop:1190305,ic:1,pov:13.8,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Isabela",r:"Region II",lat:17.149,lng:121.890,pop:1714588,ic:1,pov:13.3,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Nueva Vizcaya",r:"Region II",lat:16.482,lng:121.148,pop:484332,ic:2,pov:16.9,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Quirino",r:"Region II",lat:16.513,lng:121.513,pop:196386,ic:3,pov:21.0,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
-  // Region III
   {n:"Aurora",r:"Region III",lat:15.759,lng:121.562,pop:223245,ic:3,pov:26.5,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Bataan",r:"Region III",lat:14.674,lng:120.541,pop:868542,ic:1,pov:5.6,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Bulacan",r:"Region III",lat:14.848,lng:120.811,pop:3292071,ic:1,pov:3.8,th:0,tc:3,hw:0,hp:0,av:0,mx:0,md:0},
@@ -822,79 +863,66 @@ const PD = [
   {n:"Pampanga",r:"Region III",lat:15.029,lng:120.695,pop:2558543,ic:1,pov:4.2,th:1,tc:1,hw:0,hp:0,av:0,mx:0,md:1},
   {n:"Tarlac",r:"Region III",lat:15.476,lng:120.596,pop:1413272,ic:1,pov:7.3,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Zambales",r:"Region III",lat:15.326,lng:119.977,pop:688429,ic:1,pov:6.9,th:0,tc:1,hw:0,hp:0,av:0,mx:0,md:0},
-  // CALABARZON
   {n:"Batangas",r:"CALABARZON",lat:13.757,lng:121.058,pop:2908494,ic:1,pov:6.1,th:0,tc:1,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Cavite",r:"CALABARZON",lat:14.282,lng:120.864,pop:4344829,ic:1,pov:2.9,th:0,tc:1,hw:0,hp:0,av:0,mx:0,md:1},
   {n:"Laguna",r:"CALABARZON",lat:14.280,lng:121.414,pop:3382193,ic:1,pov:2.8,th:1,tc:2,hw:0,hp:0,av:0,mx:1,md:1},
   {n:"Quezon",r:"CALABARZON",lat:13.937,lng:121.617,pop:2075626,ic:1,pov:18.1,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Rizal",r:"CALABARZON",lat:14.524,lng:121.179,pop:3330143,ic:1,pov:2.6,th:0,tc:4,hw:0,hp:2,av:0,mx:0,md:0},
-  // MIMAROPA
   {n:"Marinduque",r:"MIMAROPA",lat:13.444,lng:121.842,pop:234521,ic:2,pov:24.3,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Occidental Mindoro",r:"MIMAROPA",lat:13.225,lng:120.596,pop:573378,ic:2,pov:26.0,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Oriental Mindoro",r:"MIMAROPA",lat:13.412,lng:121.180,pop:900053,ic:1,pov:26.5,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Palawan",r:"MIMAROPA",lat:9.739,lng:118.735,pop:939594,ic:1,pov:18.3,th:0,tc:0,hw:1,hp:0,av:0,mx:0,md:0},
   {n:"Romblon",r:"MIMAROPA",lat:12.578,lng:122.278,pop:295222,ic:3,pov:24.1,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
-  // Region V - Bicol
   {n:"Albay",r:"Region V",lat:13.139,lng:123.744,pop:1374768,ic:1,pov:20.7,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Camarines Norte",r:"Region V",lat:14.113,lng:122.955,pop:628542,ic:2,pov:26.8,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Camarines Sur",r:"Region V",lat:13.563,lng:123.273,pop:2067558,ic:1,pov:24.2,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Catanduanes",r:"Region V",lat:13.579,lng:124.236,pop:270027,ic:3,pov:22.7,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Masbate",r:"Region V",lat:12.368,lng:123.625,pop:893668,ic:2,pov:35.5,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Sorsogon",r:"Region V",lat:12.974,lng:124.007,pop:830208,ic:2,pov:26.9,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
-  // Region VI - Western Visayas
   {n:"Aklan",r:"Region VI",lat:11.706,lng:122.366,pop:604945,ic:2,pov:16.8,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Antique",r:"Region VI",lat:10.754,lng:121.939,pop:604982,ic:2,pov:25.2,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Capiz",r:"Region VI",lat:11.587,lng:122.752,pop:779031,ic:2,pov:17.8,th:0,tc:1,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Guimaras",r:"Region VI",lat:10.600,lng:122.598,pop:177508,ic:3,pov:16.5,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Iloilo",r:"Region VI",lat:10.697,lng:122.564,pop:2051899,ic:1,pov:18.4,th:1,tc:1,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Negros Occidental",r:"Region VI",lat:10.671,lng:122.951,pop:2940492,ic:1,pov:16.3,th:0,tc:0,hw:0,hp:0,av:0,mx:1,md:0},
-  // Region VII - Central Visayas
   {n:"Bohol",r:"Region VII",lat:9.654,lng:123.854,pop:1394329,ic:1,pov:19.2,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Cebu",r:"Region VII",lat:10.316,lng:123.885,pop:3352585,ic:1,pov:14.2,th:0,tc:1,hw:1,hp:0,av:0,mx:1,md:1},
   {n:"Negros Oriental",r:"Region VII",lat:9.307,lng:123.305,pop:1448828,ic:1,pov:25.6,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Siquijor",r:"Region VII",lat:9.216,lng:123.513,pop:102621,ic:4,pov:21.4,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
-  // Region VIII - Eastern Visayas
   {n:"Biliran",r:"Region VIII",lat:11.562,lng:124.400,pop:179679,ic:3,pov:27.3,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Eastern Samar",r:"Region VIII",lat:11.608,lng:125.431,pop:472456,ic:2,pov:39.5,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Leyte",r:"Region VIII",lat:11.254,lng:125.000,pop:1940061,ic:1,pov:23.4,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Northern Samar",r:"Region VIII",lat:12.459,lng:124.643,pop:641648,ic:2,pov:39.3,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Samar",r:"Region VIII",lat:11.775,lng:124.885,pop:773561,ic:1,pov:39.3,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Southern Leyte",r:"Region VIII",lat:10.133,lng:124.845,pop:446382,ic:2,pov:26.9,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
-  // Region IX - Zamboanga
   {n:"Zamboanga del Norte",r:"Region IX",lat:8.588,lng:123.341,pop:1000898,ic:1,pov:32.6,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Zamboanga del Sur",r:"Region IX",lat:7.828,lng:123.431,pop:1043518,ic:1,pov:25.5,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Zamboanga Sibugay",r:"Region IX",lat:7.786,lng:122.588,pop:714862,ic:2,pov:28.3,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
-  // Region X - Northern Mindanao
   {n:"Bukidnon",r:"Region X",lat:8.158,lng:125.127,pop:1541308,ic:1,pov:27.1,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Camiguin",r:"Region X",lat:9.255,lng:124.713,pop:90987,ic:4,pov:24.0,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Lanao del Norte",r:"Region X",lat:7.991,lng:123.816,pop:1041078,ic:1,pov:25.0,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Misamis Occidental",r:"Region X",lat:8.480,lng:123.799,pop:621002,ic:2,pov:16.7,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Misamis Oriental",r:"Region X",lat:8.454,lng:124.632,pop:714102,ic:1,pov:9.0,th:0,tc:0,hw:1,hp:0,av:0,mx:1,md:0},
-  // Region XI - Davao
   {n:"Davao de Oro",r:"Region XI",lat:7.602,lng:125.963,pop:804697,ic:1,pov:28.4,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Davao del Norte",r:"Region XI",lat:7.448,lng:125.808,pop:1039637,ic:1,pov:12.5,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Davao del Sur",r:"Region XI",lat:6.750,lng:125.357,pop:1097605,ic:1,pov:5.7,th:0,tc:0,hw:1,hp:0,av:0,mx:0,md:1},
   {n:"Davao Occidental",r:"Region XI",lat:6.055,lng:125.468,pop:328419,ic:2,pov:18.4,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Davao Oriental",r:"Region XI",lat:6.949,lng:126.230,pop:543451,ic:2,pov:27.3,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
-  // Region XII - SOCCSKSARGEN
   {n:"Cotabato",r:"Region XII",lat:7.008,lng:125.089,pop:1378996,ic:1,pov:33.6,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Sarangani",r:"Region XII",lat:6.101,lng:125.153,pop:554645,ic:2,pov:39.8,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"South Cotabato",r:"Region XII",lat:6.503,lng:124.847,pop:920549,ic:1,pov:20.2,th:0,tc:1,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Sultan Kudarat",r:"Region XII",lat:6.632,lng:124.597,pop:828049,ic:2,pov:35.1,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
-  // Region XIII - Caraga
   {n:"Agusan del Norte",r:"Region XIII",lat:8.948,lng:125.541,pop:461002,ic:2,pov:22.4,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Agusan del Sur",r:"Region XIII",lat:8.601,lng:125.913,pop:855862,ic:2,pov:33.1,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Dinagat Islands",r:"Region XIII",lat:10.221,lng:125.579,pop:127152,ic:4,pov:45.0,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Surigao del Norte",r:"Region XIII",lat:9.789,lng:125.497,pop:569745,ic:2,pov:26.7,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Surigao del Sur",r:"Region XIII",lat:9.078,lng:126.196,pop:617034,ic:2,pov:30.0,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
-  // BARMM
   {n:"Basilan",r:"BARMM",lat:6.707,lng:121.971,pop:421193,ic:2,pov:29.4,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Lanao del Sur",r:"BARMM",lat:8.003,lng:124.293,pop:1078024,ic:1,pov:53.4,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Maguindanao del Norte",r:"BARMM",lat:7.083,lng:124.233,pop:652000,ic:1,pov:52.2,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Maguindanao del Sur",r:"BARMM",lat:6.900,lng:124.100,pop:522000,ic:1,pov:52.2,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Sulu",r:"BARMM",lat:5.994,lng:121.004,pop:981843,ic:2,pov:73.2,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Tawi-Tawi",r:"BARMM",lat:5.028,lng:119.773,pop:450893,ic:3,pov:67.6,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
-  // CAR
   {n:"Abra",r:"CAR",lat:17.597,lng:120.619,pop:238200,ic:2,pov:25.4,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Apayao",r:"CAR",lat:18.248,lng:121.194,pop:125942,ic:3,pov:34.9,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
   {n:"Benguet",r:"CAR",lat:16.461,lng:120.587,pop:465923,ic:1,pov:13.1,th:0,tc:0,hw:0,hp:0,av:0,mx:1,md:0},
@@ -903,22 +931,43 @@ const PD = [
   {n:"Mountain Province",r:"CAR",lat:17.083,lng:120.977,pop:168289,ic:3,pov:28.6,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
 ];
 
-function calcScore(p) {
-  const popScore = Math.sqrt(p.pop / 800000);
-  const incomeW = {0:0.7,1:1.0,2:1.4,3:1.1,4:0.5,5:0.2,6:0.1}[p.ic] ?? 0.5;
-  const povMod = Math.max(0.05, 1 - (Math.max(0, p.pov - 5) / 100) * 1.8);
-  const totalPer100k = (p.th*4 + p.tc + (p.hw+p.hp+p.av+p.mx+p.md)*0.6) / (p.pop/100000);
-  const gap = 1 / (totalPer100k + 0.25);
-  return popScore * incomeW * povMod * gap;
+function calcScore(p){
+  const popScore=Math.sqrt(p.pop/800000);
+  const incomeW={0:0.7,1:1.0,2:1.4,3:1.1,4:0.5,5:0.2,6:0.1}[p.ic]??0.5;
+  const povMod=Math.max(0.05,1-(Math.max(0,p.pov-5)/100)*1.8);
+  const totalPer100k=(p.th*4+p.tc+(p.hw+p.hp+p.av+p.mx+p.md)*0.6)/(p.pop/100000);
+  const gap=1/(totalPer100k+0.25);
+  return popScore*incomeW*povMod*gap;
 }
-const rawMax = Math.max(...PD.map(calcScore));
-PD.forEach(p => { p.score = Math.round(calcScore(p) / rawMax * 100); });
+const rawMax=Math.max(...PD.map(calcScore));
+PD.forEach(p=>{p.score=Math.round(calcScore(p)/rawMax*100);});
 
-const LAYERS = {
+const LAYERS={
   opportunity:{
     title:'Opportunity Score',
     legend:[{c:'#7f0000',l:'Very High >70'},{c:'#d73027',l:'High 50-70'},{c:'#f46d43',l:'Med-High 35-50'},{c:'#fdae61',l:'Medium 20-35'},{c:'#abd9e9',l:'Low 10-20'},{c:'#2166ac',l:'Very Low <10'}],
     fn:p=>{const s=p.score;return s>70?'#7f0000':s>50?'#d73027':s>35?'#f46d43':s>20?'#fdae61':s>10?'#abd9e9':'#2166ac'}
+  },
+  market:{
+    title:'Market Potential',
+    subtitle:'Pop size vs poverty rate',
+    legend:[
+      {c:'#1a9850',l:'High pop + low poverty'},
+      {c:'#fee08b',l:'High pop + mid poverty'},
+      {c:'#fdae61',l:'High pop + high poverty'},
+      {c:'#f46d43',l:'Mid pop + high poverty'},
+      {c:'#d73027',l:'Low pop + high poverty'}
+    ],
+    fn:p=>{
+      const popNorm=Math.min(p.pop/3000000,1);
+      const povNorm=Math.min(p.pov/65,1);
+      const score=popNorm*0.7+(1-povNorm)*0.3;
+      if(score>=0.82)return '#1a9850';
+      if(score>=0.60)return '#fee08b';
+      if(score>=0.38)return '#fdae61';
+      if(score>=0.20)return '#f46d43';
+      return '#d73027';
+    }
   },
   population:{
     title:'Population (2020)',
@@ -947,14 +996,14 @@ const LAYERS = {
   }
 };
 
-const TMC_H = [
+const TMC_H=[
   {n:"The Medical City - Ortigas",city:"Pasig, NCR",lat:14.586,lng:121.061},
   {n:"The Medical City - Clark",city:"Pampanga",lat:15.174,lng:120.545},
   {n:"The Medical City - South Luzon",city:"Laguna",lat:14.190,lng:121.160},
   {n:"The Medical City - Iloilo",city:"Iloilo City",lat:10.714,lng:122.564},
   {n:"The Medical City - Pangasinan",city:"Urdaneta, Pangasinan",lat:15.976,lng:120.575},
 ];
-const TMC_C = [
+const TMC_C=[
   {n:"TMC Clinics (QC, multiple)",city:"Quezon City",lat:14.651,lng:121.049,cnt:8},
   {n:"TMC Clinic Makati",city:"Makati",lat:14.555,lng:121.024,cnt:3},
   {n:"TMC Clinic Taguig/BGC",city:"Taguig",lat:14.518,lng:121.051,cnt:2},
@@ -983,7 +1032,7 @@ const TMC_C = [
   {n:"TMC Clinic SM Iloilo",city:"Iloilo City",lat:10.720,lng:122.562,cnt:1},
   {n:"TMC Clinic SM General Santos",city:"South Cotabato",lat:6.116,lng:125.172,cnt:1},
 ];
-const COMP_PTS = [
+const COMP_PTS=[
   {g:'hw',n:'Healthway Medical',city:'Metro Manila (multiple)',lat:14.600,lng:120.984,cnt:6},
   {g:'hw',n:'Healthway Medical',city:'Cebu City',lat:10.316,lng:123.885,cnt:1},
   {g:'hw',n:'Healthway Medical',city:'Davao City',lat:7.191,lng:125.455,cnt:1},
@@ -1005,25 +1054,55 @@ const COMP_PTS = [
   {g:'md',n:'Medicard',city:'Cebu City',lat:10.320,lng:123.900,cnt:1},
   {g:'md',n:'Medicard',city:'Davao City',lat:7.200,lng:125.460,cnt:1},
 ];
-const COMP_COLORS = {hw:'#f6ad55',hp:'#fc8181',av:'#68d391',mx:'#76e4f7',md:'#b794f4'};
+const COMP_COLORS={hw:'#f6ad55',hp:'#fc8181',av:'#68d391',mx:'#76e4f7',md:'#b794f4'};
 
-let curLayer = 'opportunity';
-const markerGroups = {hw:[],hp:[],av:[],mx:[],md:[],tmc:[]};
-let provMarkers = [];
+// ── THEME ──
+let isDark=true;
+let tileLayer=null;
+const TILES={
+  dark:'https://{s}.basemaps.cartocdn.com/dark_matter/{z}/{x}/{y}{r}.png',
+  light:'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
+};
 
-const map = L.map('map',{center:[12.0,122.0],zoom:6,minZoom:5,maxZoom:13});
+function toggleTheme(){
+  isDark=!isDark;
+  document.documentElement.setAttribute('data-theme',isDark?'dark':'light');
+  document.getElementById('theme-toggle').textContent=isDark?'🌙 Dark':'☀️ Light';
+  swapTiles();
+  refreshBubbleColors();
+}
+
+function swapTiles(){
+  if(tileLayer) map.removeLayer(tileLayer);
+  tileLayer=L.tileLayer(isDark?TILES.dark:TILES.light,
+    {attribution:'&copy; OpenStreetMap &copy; CARTO',subdomains:'abcd',maxZoom:19}
+  ).addTo(map);
+}
+
+// ── MAP INIT ──
+let curLayer='opportunity';
+const markerGroups={hw:[],hp:[],av:[],mx:[],md:[],tmc:[]};
+let provMarkers=[];
+
+const map=L.map('map',{center:[12.0,122.0],zoom:6,minZoom:5,maxZoom:13,zoomControl:false});
 L.control.zoom({position:'bottomleft'}).addTo(map);
-L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_matter/{z}/{x}/{y}{r}.png',{
-  attribution:'&copy; OpenStreetMap &copy; CARTO',subdomains:'abcd',maxZoom:19
-}).addTo(map);
+swapTiles();
 
-function bubbleRadius(pop){ return Math.min(Math.max(Math.sqrt(pop/200000)*3,6),22); }
+// ── PROVINCE BUBBLES ──
+function bubbleRadius(pop){return Math.min(Math.max(Math.sqrt(pop/200000)*3,6),22);}
+
+function getBubbleStroke(){
+  return isDark?'rgba(255,255,255,0.25)':'rgba(0,0,0,0.35)';
+}
 
 function buildProvinceMarkers(){
   PD.forEach(p=>{
     const r=bubbleRadius(p.pop);
     const color=LAYERS[curLayer].fn(p);
-    const m=L.circleMarker([p.lat,p.lng],{radius:r,fillColor:color,color:'rgba(255,255,255,0.25)',weight:1.2,fillOpacity:0.88,pane:'markerPane'}).addTo(map);
+    const m=L.circleMarker([p.lat,p.lng],{
+      radius:r,fillColor:color,color:getBubbleStroke(),
+      weight:1.5,fillOpacity:0.85,pane:'markerPane'
+    }).addTo(map);
     m.bindTooltip(`<b>${p.n}</b> &middot; ${p.r}<br>Pop: ${(p.pop/1e6).toFixed(2)}M &middot; Score: <b>${p.score}</b>/100`,{sticky:true});
     m.on('click',()=>showInfo(p));
     provMarkers.push({m,p});
@@ -1031,9 +1110,11 @@ function buildProvinceMarkers(){
 }
 
 function refreshBubbleColors(){
-  provMarkers.forEach(({m,p})=>m.setStyle({fillColor:LAYERS[curLayer].fn(p)}));
+  const stroke=getBubbleStroke();
+  provMarkers.forEach(({m,p})=>m.setStyle({fillColor:LAYERS[curLayer].fn(p),color:stroke}));
 }
 
+// ── SITE MARKERS ──
 function makeIcon(html,size){
   return L.divIcon({html,iconSize:size,iconAnchor:[size[0]/2,size[1]/2],className:''});
 }
@@ -1041,32 +1122,33 @@ function makeIcon(html,size){
 function buildSiteMarkers(){
   TMC_H.forEach(h=>{
     const m=L.marker([h.lat,h.lng],{icon:makeIcon(
-      `<div style="background:#0a2448;border:2.5px solid #4a9eff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 0 12px rgba(74,158,255,.6)">&#127973;</div>`,
+      `<div style="background:#0a2448;border:2.5px solid #4a9eff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 0 12px rgba(74,158,255,.7)">&#127973;</div>`,
       [28,28]
     )}).addTo(map);
-    m.bindPopup(`<b>&#127973; ${h.n}</b><br><small style="color:#8ba3c7">${h.city}</small>`);
+    m.bindPopup(`<b>&#127973; ${h.n}</b><br><small>${h.city}</small>`);
     markerGroups.tmc.push(m);
   });
   TMC_C.forEach(c=>{
     const sz=c.cnt>4?22:c.cnt>1?18:15;
     const m=L.marker([c.lat,c.lng],{icon:makeIcon(
-      `<div style="background:#0d2a52;border:1.5px solid #4a9eff;border-radius:4px;width:${sz}px;height:${sz}px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#90c8ff;box-shadow:0 0 6px rgba(74,158,255,.35)">${c.cnt}</div>`,
+      `<div style="background:#0d2a52;border:1.5px solid #4a9eff;border-radius:4px;width:${sz}px;height:${sz}px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#90c8ff;box-shadow:0 0 6px rgba(74,158,255,.4)">${c.cnt}</div>`,
       [sz,sz]
     )}).addTo(map);
-    m.bindPopup(`<b>${c.n}</b><br><small style="color:#8ba3c7">${c.city}</small><br><small>${c.cnt} clinic${c.cnt>1?'s':''}</small>`);
+    m.bindPopup(`<b>${c.n}</b><br><small>${c.city}</small> &middot; ${c.cnt} clinic${c.cnt>1?'s':''}`);
     markerGroups.tmc.push(m);
   });
   COMP_PTS.forEach(c=>{
     const col=COMP_COLORS[c.g];
     const m=L.marker([c.lat,c.lng],{icon:makeIcon(
-      `<div style="background:${col}20;border:2px solid ${col};border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:${col};box-shadow:0 0 6px ${col}50">${c.cnt}</div>`,
+      `<div style="background:${col}22;border:2px solid ${col};border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:${col};box-shadow:0 0 6px ${col}55">${c.cnt}</div>`,
       [20,20]
     )}).addTo(map);
-    m.bindPopup(`<b>${c.n}</b><br><small style="color:#8ba3c7">${c.city}</small><br><small>${c.cnt} site${c.cnt>1?'s':''}</small>`);
+    m.bindPopup(`<b>${c.n}</b><br><small>${c.city}</small> &middot; ${c.cnt} site${c.cnt>1?'s':''}`);
     markerGroups[c.g].push(m);
   });
 }
 
+// ── CONTROLS ──
 function setLayer(layer,btn){
   curLayer=layer;
   document.querySelectorAll('.layer-btn').forEach(b=>b.classList.remove('active'));
@@ -1078,19 +1160,22 @@ function setLayer(layer,btn){
 function updateLegend(){
   const L2=LAYERS[curLayer];
   document.getElementById('ltitle').textContent=L2.title;
-  document.getElementById('lbody').innerHTML=L2.legend.map(x=>`<div class="lrow"><div class="lsw" style="background:${x.c}"></div><span>${x.l}</span></div>`).join('');
+  document.getElementById('lbody').innerHTML=L2.legend.map(x=>
+    `<div class="lrow"><div class="lsw" style="background:${x.c}"></div><span>${x.l}</span></div>`
+  ).join('');
 }
 
 function toggleGroup(g,show){
   (markerGroups[g]||[]).forEach(m=>show?m.addTo(map):m.remove());
 }
 
+// ── INFO PANEL ──
 function showInfo(p){
   const icLbl={0:'Special/NCR',1:'Class 1 (Highest)',2:'Class 2',3:'Class 3',4:'Class 4',5:'Class 5',6:'Class 6 (Lowest)'}[p.ic]||'--';
   const comp=p.hw+p.hp+p.av+p.mx+p.md;
   const tmc=p.th+p.tc;
   const pc=p.pov<10?'g':p.pov<25?'w':'b';
-  const tc=tmc>5?'g':tmc>0?'w':'b';
+  const tc2=tmc>5?'g':tmc>0?'w':'b';
   const cc=comp>5?'b':comp>0?'w':'g';
   document.getElementById('iname').textContent=p.n;
   document.getElementById('iregion').textContent=p.r;
@@ -1099,7 +1184,7 @@ function showInfo(p){
     <div class="irow"><span class="il">Income Class</span><span class="iv">${icLbl}</span></div>
     <div class="irow"><span class="il">Poverty Rate</span><span class="iv ${pc}">${p.pov}%</span></div>
     <div class="irow"><span class="il">TMC Hospitals</span><span class="iv">${p.th}</span></div>
-    <div class="irow"><span class="il">TMC Clinics</span><span class="iv ${tc}">${p.tc}</span></div>
+    <div class="irow"><span class="il">TMC Clinics</span><span class="iv ${tc2}">${p.tc}</span></div>
     <div class="irow"><span class="il">Healthway</span><span class="iv ${p.hw?'w':'g'}">${p.hw}</span></div>
     <div class="irow"><span class="il">Hi-Precision</span><span class="iv ${p.hp?'w':'g'}">${p.hp}</span></div>
     <div class="irow"><span class="il">Avega</span><span class="iv ${p.av?'w':'g'}">${p.av}</span></div>
@@ -1107,14 +1192,14 @@ function showInfo(p){
     <div class="irow"><span class="il">Medicard</span><span class="iv ${p.md?'w':'g'}">${p.md}</span></div>
     <div class="irow"><span class="il">All Competitors</span><span class="iv ${cc}">${comp}</span></div>`;
   const s=p.score;
-  const fc=s>70?'#d73027':s>50?'#f46d43':s>35?'#fdae61':s>20?'#91cf60':'#3182ce';
+  const fc=s>70?'#d73027':s>50?'#f46d43':s>35?'#fdae61':s>20?'#38a169':'#3182ce';
   document.getElementById('ifill').style.cssText=`width:${s}%;background:${fc}`;
   document.getElementById('inum').style.color=fc;
   document.getElementById('inum').textContent=`${s} / 100`;
   let verdict,vc;
   if(s>70){verdict='High priority — large underserved population with viable income demographics and minimal competition.';vc='v-high';}
   else if(s>50){verdict='Strong opportunity — good population base with meaningful coverage gap.';vc='v-high';}
-  else if(s>35){verdict='Monitor closely — growing market, may suit phased or partnership approach.';vc='v-med';}
+  else if(s>35){verdict='Monitor closely — growing market, may suit a phased or partnership approach.';vc='v-med';}
   else if(tmc===0&&comp===0&&p.pop>500000){verdict='No TMC or competitor presence yet. Assess infrastructure and purchasing power before committing.';vc='v-med';}
   else{verdict='Lower priority — either well-served, limited income potential, or smaller population.';vc='v-low';}
   const vEl=document.getElementById('iverdict');
@@ -1123,6 +1208,7 @@ function showInfo(p){
   document.getElementById('info').style.display='block';
 }
 
+// ── RANKINGS ──
 function renderRankings(){
   const sorted=[...PD].filter(p=>p.n!=='Metro Manila').sort((a,b)=>b.score-a.score).slice(0,20);
   document.getElementById('rankings').innerHTML=sorted.map((p,i)=>{
@@ -1139,13 +1225,13 @@ function renderRankings(){
 
 function focusProv(name){
   const p=PD.find(x=>x.n===name);
-  if(!p) return;
+  if(!p)return;
   map.setView([p.lat,p.lng],8,{animate:true});
   showInfo(p);
   const entry=provMarkers.find(x=>x.p.n===name);
   if(entry){
-    entry.m.setStyle({color:'#fff',weight:3});
-    setTimeout(()=>entry.m.setStyle({color:'rgba(255,255,255,0.25)',weight:1.2}),1500);
+    entry.m.setStyle({color:'#ffffff',weight:3});
+    setTimeout(()=>entry.m.setStyle({color:getBubbleStroke(),weight:1.5}),1500);
   }
 }
 
