@@ -5,6 +5,148 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TMC Network Expansion — Site Selection Tool</title>
 <style>
+LEAFLET_CSS_PLACEHOLDER
+/* ── THEME VARIABLES ── */
+:root {
+  --bg-app:#0f1724; --bg-sidebar:#161f35; --bg-section:#1e2d4a;
+  --bg-item:#1e2d4a; --bg-item-hover:#243050; --bg-active:#1a3a6e;
+  --border:#1e2d4a; --border2:#2d4070; --border-active:#4a9eff;
+  --text-primary:#e2e8f0; --text-muted:#5a6a85; --text-accent:#63b3ed;
+  --text-active:#cce5ff; --text-strong:#d4e5f9;
+  --info-bg:rgba(13,20,38,.97); --legend-bg:rgba(13,20,38,.95);
+  --note-bg:rgba(13,20,38,.85); --map-bg:#0d1928;
+  --popup-bg:#161f35; --popup-tip:#161f35;
+  --tooltip-bg:#0d1928; --tooltip-border:#243050; --tooltip-text:#d4e5f9;
+  --row-border:#1e2d4a; --il:#5a6a85;
+  --bubble-stroke:rgba(255,255,255,0.25);
+  --scrollbar-thumb:#2d4070;
+}
+:root[data-theme="light"] {
+  --bg-app:#f0f4f8; --bg-sidebar:#ffffff; --bg-section:#f7fafc;
+  --bg-item:#edf2f7; --bg-item-hover:#e2ecf9; --bg-active:#ebf4ff;
+  --border:#e2e8f0; --border2:#bee3f8; --border-active:#3182ce;
+  --text-primary:#1a202c; --text-muted:#718096; --text-accent:#2563eb;
+  --text-active:#1e40af; --text-strong:#1a202c;
+  --info-bg:rgba(255,255,255,0.98); --legend-bg:rgba(240,244,248,0.98);
+  --note-bg:rgba(240,244,248,0.92); --map-bg:#dde8f0;
+  --popup-bg:#ffffff; --popup-tip:#ffffff;
+  --tooltip-bg:#ffffff; --tooltip-border:#e2e8f0; --tooltip-text:#1a202c;
+  --row-border:#e2e8f0; --il:#718096;
+  --bubble-stroke:rgba(0,0,0,0.35);
+  --scrollbar-thumb:#bee3f8;
+}
+/* ── BASE ── */
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg-app);color:var(--text-primary);height:100vh;display:flex;overflow:hidden;transition:background .3s,color .3s}
+/* ── SIDEBAR ── */
+#sidebar{width:310px;min-width:310px;background:var(--bg-sidebar);display:flex;flex-direction:column;overflow:hidden;z-index:1000;box-shadow:3px 0 15px rgba(0,0,0,.2);transition:background .3s}
+#sidebar-header{padding:12px 16px;background:var(--bg-app);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;transition:background .3s}
+#sidebar-header h1{font-size:13px;font-weight:700;color:var(--text-accent);letter-spacing:.8px;text-transform:uppercase}
+#sidebar-header p{font-size:10px;color:var(--text-muted);margin-top:2px}
+#theme-toggle{background:var(--bg-item);border:1px solid var(--border2);border-radius:20px;padding:4px 10px;cursor:pointer;font-size:14px;color:var(--text-accent);transition:all .2s;white-space:nowrap}
+#theme-toggle:hover{background:var(--bg-active)}
+.section{padding:10px 14px;border-bottom:1px solid var(--border);transition:border-color .3s}
+.section-title{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin-bottom:8px;font-weight:600}
+.layer-btn{display:block;width:100%;padding:7px 10px;margin-bottom:4px;background:var(--bg-item);border:1px solid var(--border2);border-radius:6px;color:var(--text-muted);font-size:12px;cursor:pointer;text-align:left;transition:all .15s}
+.layer-btn.active{background:var(--bg-active);border-color:var(--border-active);color:var(--text-active);font-weight:600}
+.layer-btn:hover:not(.active){background:var(--bg-item-hover)}
+.comp-row{display:flex;align-items:center;gap:7px;padding:4px 0;font-size:12px;cursor:pointer;color:var(--text-muted);transition:color .15s}
+.comp-row:hover{color:var(--text-primary)}
+.comp-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;border:1px solid rgba(128,128,128,.3)}
+.comp-row input{cursor:pointer;accent-color:var(--text-accent);width:13px;height:13px}
+#opp-list{flex:1;overflow-y:auto;padding:10px 14px}
+#opp-list::-webkit-scrollbar{width:4px}
+#opp-list::-webkit-scrollbar-track{background:var(--bg-app)}
+#opp-list::-webkit-scrollbar-thumb{background:var(--scrollbar-thumb);border-radius:2px}
+.opp-item{padding:8px 10px;background:var(--bg-item);border-radius:6px;margin-bottom:5px;cursor:pointer;border-left:3px solid transparent;transition:all .15s}
+.opp-item:hover{background:var(--bg-item-hover);transform:translateX(2px)}
+.opp-item.t1{border-left-color:#d73027}.opp-item.t2{border-left-color:#f46d43}
+.opp-item.t3{border-left-color:#fdae61}.opp-item.t4{border-left-color:#68d391}
+.opp-rank{font-size:10px;color:var(--text-muted)}
+.opp-name{font-size:13px;font-weight:600;color:var(--text-strong);margin:1px 0}
+.opp-meta{font-size:11px;color:var(--text-muted);display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+.opp-score-num{font-weight:700;color:#38a169}
+.opp-bar{height:3px;background:var(--border2);border-radius:2px;margin-top:4px;overflow:hidden}
+.opp-bar-fill{height:100%;border-radius:2px}
+/* ── MAP ── */
+#map-wrap{flex:1;position:relative}
+#map{width:100%;height:100%}
+.leaflet-container{background:var(--map-bg)!important}
+/* ── INFO PANEL ── */
+#info{position:absolute;top:12px;right:12px;width:275px;background:var(--info-bg);border:1px solid var(--border);border-radius:10px;padding:14px;z-index:1000;display:none;box-shadow:0 4px 24px rgba(0,0,0,.25);backdrop-filter:blur(6px)}
+#info h3{font-size:15px;font-weight:700;color:var(--text-accent);padding-right:22px;margin-bottom:2px}
+.rtag{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.irow{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--row-border);font-size:12px}
+.irow:last-of-type{border:none}
+.il{color:var(--il)}.iv{color:var(--text-strong);font-weight:600}
+.iv.g{color:#38a169}.iv.w{color:#d97706}.iv.b{color:#dc2626}
+.opp-section{margin-top:10px;padding-top:10px;border-top:1px solid var(--row-border)}
+.opp-lbl{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.opp-track{height:10px;background:var(--bg-item);border-radius:5px;overflow:hidden}
+.opp-fill{height:100%;border-radius:5px}
+.opp-num{font-size:14px;font-weight:700;margin-top:4px}
+.verdict{margin-top:8px;padding:8px 10px;border-radius:6px;font-size:11px;line-height:1.5}
+.v-high{background:rgba(215,48,39,.1);border:1px solid rgba(215,48,39,.3);color:#c53030}
+.v-med{background:rgba(217,119,6,.1);border:1px solid rgba(217,119,6,.3);color:#92400e}
+.v-low{background:rgba(56,161,105,.1);border:1px solid rgba(56,161,105,.25);color:#276749}
+:root[data-theme="dark"] .v-high{color:#faa58a}
+:root[data-theme="dark"] .v-med{color:#fbd38d}
+:root[data-theme="dark"] .v-low{color:#9ae6b4}
+/* ── LEGEND ── */
+#legend{position:absolute;bottom:20px;right:12px;background:var(--legend-bg);border:1px solid var(--border);border-radius:8px;padding:12px 14px;z-index:1000;min-width:180px;backdrop-filter:blur(6px)}
+#legend h4{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted);margin-bottom:8px}
+.lrow{display:flex;align-items:center;gap:7px;margin-bottom:4px;font-size:11px;color:var(--text-muted)}
+.lsw{width:14px;height:10px;border-radius:2px;flex-shrink:0}
+#note{position:absolute;bottom:20px;left:12px;background:var(--note-bg);border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-size:10px;color:var(--text-muted);z-index:1000;max-width:220px;line-height:1.4;backdrop-filter:blur(4px)}
+/* ── SIDEBAR TOGGLE ── */
+#sb-open{position:fixed;top:50%;left:0;transform:translateY(-50%);z-index:2001;background:var(--bg-sidebar);border:1px solid var(--border);border-right:none;border-radius:0 6px 6px 0;padding:12px 6px;cursor:pointer;font-size:14px;color:var(--text-muted);transition:all .2s;box-shadow:3px 0 10px rgba(0,0,0,.25);display:none;flex-direction:column;align-items:center;gap:2px}
+#sb-open:hover{color:var(--text-primary);background:var(--bg-item-hover)}
+body.sb-hidden #sb-open{display:flex}
+body.sb-hidden #sidebar{width:0!important;min-width:0!important;overflow:hidden;opacity:0;pointer-events:none}
+#sidebar{transition:width .25s,min-width .25s,opacity .2s,background .3s;opacity:1}
+#sb-close{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:22px;padding:0 2px;line-height:1;transition:color .15s}
+#sb-close:hover{color:var(--text-primary)}
+/* ── COLLAPSIBLE SECTIONS ── */
+.section{padding:0!important;border-bottom:none!important}
+.section-header{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;padding:9px 14px;border-bottom:1px solid var(--border);transition:background .15s}
+.section-header:hover{background:rgba(128,128,128,0.07)}
+.section-title{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);font-weight:600;margin:0;padding:0}
+.chevron{font-size:10px;color:var(--text-muted);transition:transform .25s;display:inline-block}
+.chevron.down{transform:rotate(-90deg)}
+.section-content{overflow:hidden;transition:max-height .3s ease,padding .3s;max-height:600px;padding:8px 14px 10px}
+.section-content.collapsed{max-height:0!important;padding:0!important}
+/* ── OPP LIST ── */
+#opp-list{flex:1;overflow:hidden;display:flex;flex-direction:column}
+#opp-header{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;padding:9px 14px;border-bottom:1px solid var(--border);flex-shrink:0;transition:background .15s}
+#opp-header:hover{background:rgba(128,128,128,0.07)}
+#rankings-wrap{flex:1;overflow-y:auto;padding:8px 14px}
+#rankings-wrap::-webkit-scrollbar{width:4px}
+#rankings-wrap::-webkit-scrollbar-track{background:var(--bg-app)}
+#rankings-wrap::-webkit-scrollbar-thumb{background:var(--scrollbar-thumb);border-radius:2px}
+#rankings-wrap.collapsed{display:none}
+/* ── INFO PANEL (scrollable) ── */
+#info{max-height:calc(100vh - 40px);flex-direction:column;padding:0;overflow:hidden}
+#info-head{padding:12px 14px 10px;flex-shrink:0;position:relative;border-bottom:1px solid var(--row-border)}
+#info h3{padding-right:22px;margin-bottom:2px;font-size:15px;font-weight:700;color:var(--text-accent)}
+#info-body{overflow-y:auto;flex:1;padding:8px 14px 14px}
+#info-body::-webkit-scrollbar{width:4px}
+#info-body::-webkit-scrollbar-track{background:transparent}
+#info-body::-webkit-scrollbar-thumb{background:var(--scrollbar-thumb);border-radius:2px}
+/* ── FACILITY LIST ── */
+.fac-section{margin-top:10px;padding-top:10px;border-top:1px solid var(--row-border)}
+.fac-group{margin-bottom:10px}
+.fac-group-title{font-size:10px;text-transform:uppercase;letter-spacing:.5px;font-weight:600;margin-bottom:5px;padding-bottom:3px;border-bottom:1px solid var(--border)}
+.fac-item{font-size:11px;color:var(--text-primary);padding:3px 0 3px 8px;border-left:2px solid var(--border2);margin-bottom:3px;line-height:1.4}
+.fac-item .fac-sub{display:block;color:var(--text-muted);font-size:10px;margin-top:1px}
+/* ── LEAFLET OVERRIDES ── */
+.leaflet-tooltip{background:var(--tooltip-bg);border:1px solid var(--tooltip-border);color:var(--tooltip-text);border-radius:6px;font-size:12px;padding:5px 8px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.leaflet-tooltip-top:before{border-top-color:var(--tooltip-border)}
+.leaflet-popup-content-wrapper{background:var(--popup-bg);border:1px solid var(--border);color:var(--text-primary);border-radius:8px}
+.leaflet-popup-tip{background:var(--popup-tip)}
+.leaflet-control-zoom a{background:var(--bg-sidebar)!important;color:var(--text-primary)!important;border-color:var(--border)!important}
+.leaflet-control-zoom a:hover{background:var(--bg-item-hover)!important}
+.leaflet-control-attribution{background:var(--note-bg)!important;color:var(--text-muted)!important}
+<style>
 /* required styles */
 
 .leaflet-pane,
@@ -667,123 +809,28 @@ svg.leaflet-image-layer.leaflet-interactive path {
 		}
 	}
 
-/* ── THEME VARIABLES ── */
-:root {
-  --bg-app:#0f1724; --bg-sidebar:#161f35; --bg-section:#1e2d4a;
-  --bg-item:#1e2d4a; --bg-item-hover:#243050; --bg-active:#1a3a6e;
-  --border:#1e2d4a; --border2:#2d4070; --border-active:#4a9eff;
-  --text-primary:#e2e8f0; --text-muted:#5a6a85; --text-accent:#63b3ed;
-  --text-active:#cce5ff; --text-strong:#d4e5f9;
-  --info-bg:rgba(13,20,38,.97); --legend-bg:rgba(13,20,38,.95);
-  --note-bg:rgba(13,20,38,.85); --map-bg:#0d1928;
-  --popup-bg:#161f35; --popup-tip:#161f35;
-  --tooltip-bg:#0d1928; --tooltip-border:#243050; --tooltip-text:#d4e5f9;
-  --row-border:#1e2d4a; --il:#5a6a85;
-  --bubble-stroke:rgba(255,255,255,0.25);
-  --scrollbar-thumb:#2d4070;
-}
-:root[data-theme="light"] {
-  --bg-app:#f0f4f8; --bg-sidebar:#ffffff; --bg-section:#f7fafc;
-  --bg-item:#edf2f7; --bg-item-hover:#e2ecf9; --bg-active:#ebf4ff;
-  --border:#e2e8f0; --border2:#bee3f8; --border-active:#3182ce;
-  --text-primary:#1a202c; --text-muted:#718096; --text-accent:#2563eb;
-  --text-active:#1e40af; --text-strong:#1a202c;
-  --info-bg:rgba(255,255,255,0.98); --legend-bg:rgba(240,244,248,0.98);
-  --note-bg:rgba(240,244,248,0.92); --map-bg:#dde8f0;
-  --popup-bg:#ffffff; --popup-tip:#ffffff;
-  --tooltip-bg:#ffffff; --tooltip-border:#e2e8f0; --tooltip-text:#1a202c;
-  --row-border:#e2e8f0; --il:#718096;
-  --bubble-stroke:rgba(0,0,0,0.35);
-  --scrollbar-thumb:#bee3f8;
-}
-/* ── BASE ── */
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg-app);color:var(--text-primary);height:100vh;display:flex;overflow:hidden;transition:background .3s,color .3s}
-/* ── SIDEBAR ── */
-#sidebar{width:310px;min-width:310px;background:var(--bg-sidebar);display:flex;flex-direction:column;overflow:hidden;z-index:1000;box-shadow:3px 0 15px rgba(0,0,0,.2);transition:background .3s}
-#sidebar-header{padding:12px 16px;background:var(--bg-app);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;transition:background .3s}
-#sidebar-header h1{font-size:13px;font-weight:700;color:var(--text-accent);letter-spacing:.8px;text-transform:uppercase}
-#sidebar-header p{font-size:10px;color:var(--text-muted);margin-top:2px}
-#theme-toggle{background:var(--bg-item);border:1px solid var(--border2);border-radius:20px;padding:4px 10px;cursor:pointer;font-size:14px;color:var(--text-accent);transition:all .2s;white-space:nowrap}
-#theme-toggle:hover{background:var(--bg-active)}
-.section{padding:10px 14px;border-bottom:1px solid var(--border);transition:border-color .3s}
-.section-title{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);margin-bottom:8px;font-weight:600}
-.layer-btn{display:block;width:100%;padding:7px 10px;margin-bottom:4px;background:var(--bg-item);border:1px solid var(--border2);border-radius:6px;color:var(--text-muted);font-size:12px;cursor:pointer;text-align:left;transition:all .15s}
-.layer-btn.active{background:var(--bg-active);border-color:var(--border-active);color:var(--text-active);font-weight:600}
-.layer-btn:hover:not(.active){background:var(--bg-item-hover)}
-.comp-row{display:flex;align-items:center;gap:7px;padding:4px 0;font-size:12px;cursor:pointer;color:var(--text-muted);transition:color .15s}
-.comp-row:hover{color:var(--text-primary)}
-.comp-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;border:1px solid rgba(128,128,128,.3)}
-.comp-row input{cursor:pointer;accent-color:var(--text-accent);width:13px;height:13px}
-#opp-list{flex:1;overflow-y:auto;padding:10px 14px}
-#opp-list::-webkit-scrollbar{width:4px}
-#opp-list::-webkit-scrollbar-track{background:var(--bg-app)}
-#opp-list::-webkit-scrollbar-thumb{background:var(--scrollbar-thumb);border-radius:2px}
-.opp-item{padding:8px 10px;background:var(--bg-item);border-radius:6px;margin-bottom:5px;cursor:pointer;border-left:3px solid transparent;transition:all .15s}
-.opp-item:hover{background:var(--bg-item-hover);transform:translateX(2px)}
-.opp-item.t1{border-left-color:#d73027}.opp-item.t2{border-left-color:#f46d43}
-.opp-item.t3{border-left-color:#fdae61}.opp-item.t4{border-left-color:#68d391}
-.opp-rank{font-size:10px;color:var(--text-muted)}
-.opp-name{font-size:13px;font-weight:600;color:var(--text-strong);margin:1px 0}
-.opp-meta{font-size:11px;color:var(--text-muted);display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
-.opp-score-num{font-weight:700;color:#38a169}
-.opp-bar{height:3px;background:var(--border2);border-radius:2px;margin-top:4px;overflow:hidden}
-.opp-bar-fill{height:100%;border-radius:2px}
-/* ── MAP ── */
-#map-wrap{flex:1;position:relative}
-#map{width:100%;height:100%}
-.leaflet-container{background:var(--map-bg)!important}
-/* ── INFO PANEL ── */
-#info{position:absolute;top:12px;right:12px;width:275px;background:var(--info-bg);border:1px solid var(--border);border-radius:10px;padding:14px;z-index:1000;display:none;box-shadow:0 4px 24px rgba(0,0,0,.25);backdrop-filter:blur(6px)}
-#info h3{font-size:15px;font-weight:700;color:var(--text-accent);padding-right:22px;margin-bottom:2px}
-.rtag{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
-#info-close{position:absolute;top:10px;right:12px;background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:20px;line-height:1}
-#info-close:hover{color:var(--text-primary)}
-.irow{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--row-border);font-size:12px}
-.irow:last-of-type{border:none}
-.il{color:var(--il)}.iv{color:var(--text-strong);font-weight:600}
-.iv.g{color:#38a169}.iv.w{color:#d97706}.iv.b{color:#dc2626}
-.opp-section{margin-top:10px;padding-top:10px;border-top:1px solid var(--row-border)}
-.opp-lbl{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
-.opp-track{height:10px;background:var(--bg-item);border-radius:5px;overflow:hidden}
-.opp-fill{height:100%;border-radius:5px}
-.opp-num{font-size:14px;font-weight:700;margin-top:4px}
-.verdict{margin-top:8px;padding:8px 10px;border-radius:6px;font-size:11px;line-height:1.5}
-.v-high{background:rgba(215,48,39,.1);border:1px solid rgba(215,48,39,.3);color:#c53030}
-.v-med{background:rgba(217,119,6,.1);border:1px solid rgba(217,119,6,.3);color:#92400e}
-.v-low{background:rgba(56,161,105,.1);border:1px solid rgba(56,161,105,.25);color:#276749}
-:root[data-theme="dark"] .v-high{color:#faa58a}
-:root[data-theme="dark"] .v-med{color:#fbd38d}
-:root[data-theme="dark"] .v-low{color:#9ae6b4}
-/* ── LEGEND ── */
-#legend{position:absolute;bottom:20px;right:12px;background:var(--legend-bg);border:1px solid var(--border);border-radius:8px;padding:12px 14px;z-index:1000;min-width:180px;backdrop-filter:blur(6px)}
-#legend h4{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted);margin-bottom:8px}
-.lrow{display:flex;align-items:center;gap:7px;margin-bottom:4px;font-size:11px;color:var(--text-muted)}
-.lsw{width:14px;height:10px;border-radius:2px;flex-shrink:0}
-#note{position:absolute;bottom:20px;left:12px;background:var(--note-bg);border:1px solid var(--border);border-radius:6px;padding:8px 12px;font-size:10px;color:var(--text-muted);z-index:1000;max-width:220px;line-height:1.4;backdrop-filter:blur(4px)}
-/* ── LEAFLET OVERRIDES ── */
-.leaflet-tooltip{background:var(--tooltip-bg);border:1px solid var(--tooltip-border);color:var(--tooltip-text);border-radius:6px;font-size:12px;padding:5px 8px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
-.leaflet-tooltip-top:before{border-top-color:var(--tooltip-border)}
-.leaflet-popup-content-wrapper{background:var(--popup-bg);border:1px solid var(--border);color:var(--text-primary);border-radius:8px}
-.leaflet-popup-tip{background:var(--popup-tip)}
-.leaflet-control-zoom a{background:var(--bg-sidebar)!important;color:var(--text-primary)!important;border-color:var(--border)!important}
-.leaflet-control-zoom a:hover{background:var(--bg-item-hover)!important}
-.leaflet-control-attribution{background:var(--note-bg)!important;color:var(--text-muted)!important}
+</style>
 </style>
 </head>
 <body>
 
+<button id="sb-open" onclick="toggleSidebar()" title="Show sidebar">&#9776;<span style="font-size:8px;letter-spacing:.5px;margin-top:2px">MENU</span></button>
 <div id="sidebar">
   <div id="sidebar-header">
     <div>
       <h1>TMC Expansion Tool</h1>
       <p>Strategic site selection · Province analysis</p>
     </div>
+    <button id="sb-close" onclick="toggleSidebar()" title="Collapse sidebar">&#8249;</button>
     <button id="theme-toggle" onclick="toggleTheme()">🌙 Dark</button>
   </div>
 
   <div class="section">
-    <div class="section-title">Map Layer (bubble colour)</div>
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-title">Map Layer</span>
+      <span class="chevron">&#9660;</span>
+    </div>
+    <div class="section-content">
     <button class="layer-btn active" onclick="setLayer('opportunity',this)">🎯 Opportunity Score</button>
     <button class="layer-btn" onclick="setLayer('market',this)">🌡️ Market Potential</button>
     <button class="layer-btn" onclick="setLayer('population',this)">👥 Population (2020)</button>
@@ -791,33 +838,54 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg-app);color:
     <button class="layer-btn" onclick="setLayer('poverty',this)">📉 Poverty Rate</button>
     <button class="layer-btn" onclick="setLayer('tmc',this)">🏥 TMC Presence</button>
     <button class="layer-btn" onclick="setLayer('competition',this)">⚔️ Competitor Density</button>
+    </div>
   </div>
 
   <div class="section">
-    <div class="section-title">TMC &amp; HMO Clinic Networks</div>
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-title">TMC &amp; HMO Clinic Networks</span>
+      <span class="chevron">&#9660;</span>
+    </div>
+    <div class="section-content">
     <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('tmc',this.checked)"><span class="comp-dot" style="background:#4a9eff"></span>TMC Hospitals &amp; Clinics</label>
     <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('hw',this.checked)"><span class="comp-dot" style="background:#f6ad55"></span>Healthway Medical</label>
     <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('hp',this.checked)"><span class="comp-dot" style="background:#fc8181"></span>Hi-Precision</label>
     <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('av',this.checked)"><span class="comp-dot" style="background:#68d391"></span>Avega</label>
     <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('mx',this.checked)"><span class="comp-dot" style="background:#76e4f7"></span>Maxicare PCCs</label>
     <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('md',this.checked)"><span class="comp-dot" style="background:#b794f4"></span>Medicard</label>
+    </div>
   </div>
   <div class="section">
-    <div class="section-title">Hospital Groups</div>
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-title">Hospital Groups</span>
+      <span class="chevron">&#9660;</span>
+    </div>
+    <div class="section-content">
     <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('mph',this.checked)"><span class="comp-dot" style="background:#e53e3e"></span>Metro Pacific Health</label>
     <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('ql',this.checked)"><span class="comp-dot" style="background:#38b2ac"></span>Qualimed / HW QualiMed</label>
     <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('sl',this.checked)"><span class="comp-dot" style="background:#9f7aea"></span>St. Luke&apos;s Medical Center</label>
     <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('ace',this.checked)"><span class="comp-dot" style="background:#ed8936"></span>ACE Medical Centers</label>
     <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('mg',this.checked)"><span class="comp-dot" style="background:#4299e1"></span>Mount Grace Hospitals</label>
+    </div>
   </div>
   <div class="section">
-    <div class="section-title">Other Notable Hospitals</div>
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-title">Other Notable Hospitals</span>
+      <span class="chevron">&#9660;</span>
+    </div>
+    <div class="section-content">
     <label class="comp-row"><input type="checkbox" checked onchange="toggleGroup('oth',this.checked)"><span class="comp-dot" style="background:#a0aec0"></span>Standalone / Gov&apos;t Hospitals</label>
+    </div>
   </div>
 
   <div id="opp-list">
-    <div class="section-title" style="margin-bottom:10px">Top Expansion Opportunities</div>
-    <div id="rankings"></div>
+    <div id="opp-header" onclick="toggleOppSection()">
+      <span class="section-title">Top Expansion Opportunities</span>
+      <span class="chevron" id="opp-chevron">&#9660;</span>
+    </div>
+    <div id="rankings-wrap">
+      <div id="rankings"></div>
+    </div>
   </div>
 </div>
 
@@ -825,15 +893,20 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg-app);color:
   <div id="map"></div>
 
   <div id="info">
-    <button id="info-close" onclick="document.getElementById('info').style.display='none'">&#215;</button>
-    <h3 id="iname"></h3>
-    <div class="rtag" id="iregion"></div>
-    <div id="irows"></div>
-    <div class="opp-section">
-      <div class="opp-lbl">Opportunity Score</div>
-      <div class="opp-track"><div class="opp-fill" id="ifill"></div></div>
-      <div class="opp-num" id="inum"></div>
-      <div class="verdict" id="iverdict"></div>
+    <div id="info-head">
+      <button id="info-close" onclick="document.getElementById('info').style.display='none'">&#215;</button>
+      <h3 id="iname"></h3>
+      <div class="rtag" id="iregion"></div>
+    </div>
+    <div id="info-body">
+      <div id="irows"></div>
+      <div class="opp-section">
+        <div class="opp-lbl">Opportunity Score</div>
+        <div class="opp-track"><div class="opp-fill" id="ifill"></div></div>
+        <div class="opp-num" id="inum"></div>
+        <div class="verdict" id="iverdict"></div>
+      </div>
+      <div id="ifacilities"></div>
     </div>
   </div>
 
@@ -1159,6 +1232,63 @@ const OTH_PTS=[
 const COMP_COLORS={hw:'#f6ad55',hp:'#fc8181',av:'#68d391',mx:'#76e4f7',md:'#b794f4'};
 const HOSP_COLORS={mph:'#e53e3e',ql:'#38b2ac',sl:'#9f7aea',ace:'#ed8936',mg:'#4299e1',oth:'#a0aec0'};
 
+
+// ── PROVINCE FACILITY LOOKUP ──
+const PROV_FACS={};
+
+function nearestProv(lat,lng){
+  let best=null,bestD=Infinity;
+  PD.forEach(p=>{
+    const d=(lat-p.lat)**2+(lng-p.lng)**2;
+    if(d<bestD){bestD=d;best=p.n;}
+  });
+  return best;
+}
+
+function buildProvFacs(){
+  const all=[
+    ...TMC_H.map(h=>({n:h.n,sub:h.city,lat:h.lat,lng:h.lng,grp:'TMC Network',col:'#4a9eff'})),
+    ...TMC_C.map(h=>({n:h.n,sub:h.city+(h.cnt>1?' x'+h.cnt:''),lat:h.lat,lng:h.lng,grp:'TMC Network',col:'#4a9eff'})),
+    ...COMP_PTS.map(h=>({
+      n:h.city+(h.cnt>1?' (x'+h.cnt+')':''),
+      sub:{hw:'Healthway Medical',hp:'Hi-Precision Diagnostics',av:'Avega Managed Care',mx:'Maxicare PCCs',md:'Medicard Philippines'}[h.g]||h.g,
+      lat:h.lat,lng:h.lng,grp:'HMO Clinics',col:COMP_COLORS[h.g]||'#aaa'
+    })),
+    ...MPH_PTS.map(h=>({n:h.city,sub:'Metro Pacific Health',lat:h.lat,lng:h.lng,grp:'Hospital Groups',col:HOSP_COLORS.mph})),
+    ...QL_PTS.map(h=>({n:h.city,sub:'Qualimed / HW QualiMed',lat:h.lat,lng:h.lng,grp:'Hospital Groups',col:HOSP_COLORS.ql})),
+    ...SL_PTS.map(h=>({n:h.city,sub:"St. Luke's Medical Center",lat:h.lat,lng:h.lng,grp:'Hospital Groups',col:HOSP_COLORS.sl})),
+    ...ACE_PTS.map(h=>({n:h.city,sub:'ACE Medical Centers',lat:h.lat,lng:h.lng,grp:'Hospital Groups',col:HOSP_COLORS.ace})),
+    ...MG_PTS.map(h=>({n:h.city,sub:'Mount Grace Hospitals',lat:h.lat,lng:h.lng,grp:'Hospital Groups',col:HOSP_COLORS.mg})),
+    ...OTH_PTS.map(h=>({n:h.n,sub:h.city,lat:h.lat,lng:h.lng,grp:'Other Hospitals',col:HOSP_COLORS.oth})),
+  ];
+  all.forEach(f=>{
+    const prov=nearestProv(f.lat,f.lng);
+    if(!PROV_FACS[prov])PROV_FACS[prov]=[];
+    PROV_FACS[prov].push(f);
+  });
+}
+
+// ── SIDEBAR TOGGLE ──
+function toggleSidebar(){
+  document.body.classList.toggle('sb-hidden');
+  setTimeout(function(){map.invalidateSize();},300);
+}
+
+// ── SECTION COLLAPSE ──
+function toggleSection(header){
+  const content=header.nextElementSibling;
+  const chevron=header.querySelector('.chevron');
+  content.classList.toggle('collapsed');
+  chevron.classList.toggle('down');
+}
+
+function toggleOppSection(){
+  const wrap=document.getElementById('rankings-wrap');
+  const chev=document.getElementById('opp-chevron');
+  wrap.classList.toggle('collapsed');
+  chev.classList.toggle('down');
+}
+
 // ── THEME ──
 let isDark=true;
 let tileLayer=null;
@@ -1343,7 +1473,29 @@ function showInfo(p){
   const vEl=document.getElementById('iverdict');
   vEl.className=`verdict ${vc}`;
   vEl.textContent=verdict;
-  document.getElementById('info').style.display='block';
+  // ── FACILITY LIST ──
+  const facs=PROV_FACS[p.n]||[];
+  const facEl=document.getElementById('ifacilities');
+  if(facs.length>0){
+    const grpOrder=['TMC Network','HMO Clinics','Hospital Groups','Other Hospitals'];
+    const grps={};
+    facs.forEach(function(f){if(!grps[f.grp])grps[f.grp]=[];grps[f.grp].push(f);});
+    let fhtml='<div class="fac-section">';
+    grpOrder.forEach(function(g){
+      if(!grps[g])return;
+      const col=grps[g][0].col;
+      fhtml+='<div class="fac-group"><div class="fac-group-title" style="color:'+col+'">'+g+'</div>';
+      grps[g].forEach(function(f){
+        fhtml+='<div class="fac-item">'+f.n+'<span class="fac-sub">'+f.sub+'</span></div>';
+      });
+      fhtml+='</div>';
+    });
+    fhtml+='</div>';
+    facEl.innerHTML=fhtml;
+  }else{
+    facEl.innerHTML='<div class="fac-section" style="color:var(--text-muted);font-size:11px;font-style:italic">No mapped facilities recorded for this province.</div>';
+  }
+  document.getElementById('info').style.display='flex';
 }
 
 // ── RANKINGS ──
@@ -1373,6 +1525,7 @@ function focusProv(name){
   }
 }
 
+buildProvFacs();
 buildProvinceMarkers();
 buildSiteMarkers();
 renderRankings();
