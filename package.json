@@ -1,0 +1,9 @@
+{
+  "name": "tmc-expansion-map",
+  "version": "1.0.0",
+  "description": "TMC Network Expansion — Strategic Site Selection Tool for the Philippines",
+  "private": true,
+  "scripts": {
+    "start": "npx serve ."
+  }
+}
