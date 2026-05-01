@@ -682,7 +682,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
   --bubble-stroke:rgba(255,255,255,0.25);
   --scrollbar-thumb:#2d4070;
 }
-[data-theme="light"] {
+:root[data-theme="light"] {
   --bg-app:#f0f4f8; --bg-sidebar:#ffffff; --bg-section:#f7fafc;
   --bg-item:#edf2f7; --bg-item-hover:#e2ecf9; --bg-active:#ebf4ff;
   --border:#e2e8f0; --border2:#bee3f8; --border-active:#3182ce;
@@ -752,9 +752,9 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg-app);color:
 .v-high{background:rgba(215,48,39,.1);border:1px solid rgba(215,48,39,.3);color:#c53030}
 .v-med{background:rgba(217,119,6,.1);border:1px solid rgba(217,119,6,.3);color:#92400e}
 .v-low{background:rgba(56,161,105,.1);border:1px solid rgba(56,161,105,.25);color:#276749}
-[data-theme="dark"] .v-high{color:#faa58a}
-[data-theme="dark"] .v-med{color:#fbd38d}
-[data-theme="dark"] .v-low{color:#9ae6b4}
+:root[data-theme="dark"] .v-high{color:#faa58a}
+:root[data-theme="dark"] .v-med{color:#fbd38d}
+:root[data-theme="dark"] .v-low{color:#9ae6b4}
 /* ── LEGEND ── */
 #legend{position:absolute;bottom:20px;right:12px;background:var(--legend-bg);border:1px solid var(--border);border-radius:8px;padding:12px 14px;z-index:1000;min-width:180px;backdrop-filter:blur(6px)}
 #legend h4{font-size:10px;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted);margin-bottom:8px}
@@ -1143,7 +1143,7 @@ const OTH_PTS=[
   {n:'Manila Doctors Hospital',city:'Manila',lat:14.580,lng:120.984},
   {n:'Makati Medical Center',city:'Makati (part of MPH group)',lat:14.563,lng:121.015},
   {n:'Asian Hospital & Medical Center',city:'Alabang, Muntinlupa (part of MPH)',lat:14.416,lng:121.027},
-  {n:'St. Luke's Medical Center',city:'Quezon City',lat:14.638,lng:121.034},
+  {n:"St. Luke's Medical Center",city:"Quezon City",lat:14.638,lng:121.034},
   {n:'Chong Hua Hospital',city:'Cebu City',lat:10.316,lng:123.890},
   {n:'Cebu Doctors University Hospital',city:'Cebu City',lat:10.292,lng:123.897},
   {n:'Perpetual Succour Hospital',city:'Cebu City',lat:10.320,lng:123.887},
