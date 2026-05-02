@@ -138,6 +138,38 @@ body.sb-hidden #sidebar{width:0!important;min-width:0!important;overflow:hidden;
 .fac-group-title{font-size:10px;text-transform:uppercase;letter-spacing:.5px;font-weight:600;margin-bottom:5px;padding-bottom:3px;border-bottom:1px solid var(--border)}
 .fac-item{font-size:11px;color:var(--text-primary);padding:3px 0 3px 8px;border-left:2px solid var(--border2);margin-bottom:3px;line-height:1.4}
 .fac-item .fac-sub{display:block;color:var(--text-muted);font-size:10px;margin-top:1px}
+/* ── ADD FACILITY PANEL ── */
+#add-fac-panel{position:fixed;top:50%;right:20px;transform:translateY(-50%);z-index:3000;width:270px;background:var(--bg-sidebar);border:1px solid var(--border);border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,.4);display:none;flex-direction:column;overflow:hidden;max-height:88vh}
+#add-fac-panel.open{display:flex}
+#add-fac-hdr{padding:11px 14px;background:var(--bg-app);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+#add-fac-hdr h4{font-size:11px;font-weight:700;color:var(--text-accent);text-transform:uppercase;letter-spacing:.7px;margin:0}
+#add-fac-hdr button{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:20px;line-height:1}
+#add-fac-hdr button:hover{color:var(--text-primary)}
+#add-fac-body{padding:12px 14px;overflow-y:auto;flex:1}
+.af-field{margin-bottom:10px}
+.af-field label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);font-weight:600;margin-bottom:4px}
+.af-field select,.af-field input[type=text]{width:100%;background:var(--bg-item);border:1px solid var(--border2);border-radius:5px;padding:6px 8px;color:var(--text-primary);font-size:12px;box-sizing:border-box;outline:none}
+.af-field select:focus,.af-field input[type=text]:focus{border-color:var(--border-active)}
+#af-place-hint{background:var(--bg-section);border:1.5px dashed var(--border2);border-radius:5px;padding:8px 10px;font-size:11px;color:var(--text-muted);margin-bottom:10px;text-align:center;line-height:1.5}
+#af-coords{display:block;font-size:10px;color:var(--text-accent);margin-top:3px;font-family:monospace}
+#af-submit{width:100%;padding:8px;background:#2563eb;border:none;border-radius:6px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;transition:opacity .15s;margin-top:2px}
+#af-submit:hover{opacity:.85}#af-submit:disabled{opacity:.35;cursor:not-allowed}
+#add-fac-bar{padding:8px 14px;border-top:1px solid var(--border);flex-shrink:0}
+#add-fac-bar button{width:100%;padding:7px;background:transparent;border:1px dashed var(--border2);border-radius:6px;color:var(--text-muted);font-size:11px;cursor:pointer;transition:all .15s;text-align:center}
+#add-fac-bar button:hover{border-color:#2563eb;color:#2563eb;background:rgba(37,99,235,.08)}
+/* ── STRATEGIC RECOMMENDATION ── */
+.strat-section{margin-top:10px;padding-top:10px;border-top:1px solid var(--row-border)}
+.strat-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);font-weight:600;margin-bottom:6px}
+.strat-badge{display:inline-block;padding:2px 8px;border-radius:3px;font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px}
+.sb-priority{background:rgba(220,38,38,.12);color:#ef4444;border:1px solid rgba(220,38,38,.35)}
+.sb-expand{background:rgba(37,99,235,.12);color:#3b82f6;border:1px solid rgba(37,99,235,.35)}
+.sb-monitor{background:rgba(245,158,11,.12);color:#f59e0b;border:1px solid rgba(245,158,11,.35)}
+.sb-caution{background:rgba(168,85,247,.12);color:#a855f7;border:1px solid rgba(168,85,247,.35)}
+.sb-pass{background:rgba(107,114,128,.12);color:#9ca3af;border:1px solid rgba(107,114,128,.35)}
+.strat-text{font-size:11px;color:var(--text-muted);line-height:1.65}
+/* ── MAP CLICK MODE ── */
+body.placing-fac #map,body.placing-fac .leaflet-container{cursor:crosshair!important}
+body.placing-fac .leaflet-grab{cursor:crosshair!important}
 /* ── LEAFLET OVERRIDES ── */
 .leaflet-tooltip{background:var(--tooltip-bg);border:1px solid var(--tooltip-border);color:var(--tooltip-text);border-radius:6px;font-size:12px;padding:5px 8px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
 .leaflet-tooltip-top:before{border-top-color:var(--tooltip-border)}
@@ -878,6 +910,17 @@ svg.leaflet-image-layer.leaflet-interactive path {
     </div>
   </div>
 
+  <div class="section">
+    <div class="section-header" onclick="toggleSection(this)">
+      <span class="section-title">Map Overlays</span>
+      <span class="chevron">&#9660;</span>
+    </div>
+    <div class="section-content">
+      <label class="comp-row"><input type="checkbox" id="catchment-toggle" onchange="toggleCatchment(this.checked)"><span class="comp-dot" style="background:#4a9eff22;border:1.5px dashed #4a9eff"></span>TMC Catchment (50 km)</label>
+      <label class="comp-row"><input type="checkbox" id="region-toggle" onchange="toggleRegions(this.checked)"><span class="comp-dot" style="background:#ffffff11;border:1.5px solid #888"></span>Region Boundaries</label>
+    </div>
+  </div>
+
   <div id="opp-list">
     <div id="opp-header" onclick="toggleOppSection()">
       <span class="section-title">Top Expansion Opportunities</span>
@@ -886,6 +929,55 @@ svg.leaflet-image-layer.leaflet-interactive path {
     <div id="rankings-wrap">
       <div id="rankings"></div>
     </div>
+  </div>
+  <div id="add-fac-bar">
+    <button onclick="openAddFac()">&#43; Add Facility</button>
+  </div>
+</div>
+
+<div id="add-fac-panel">
+  <div id="add-fac-hdr">
+    <h4>Add Facility</h4>
+    <button onclick="closeAddFac()">&#215;</button>
+  </div>
+  <div id="add-fac-body">
+    <div class="af-field">
+      <label>Facility Type</label>
+      <select id="af-type" onchange="updateAfType()">
+        <option value="tmc-h">TMC Hospital</option>
+        <option value="tmc-c">TMC Clinic</option>
+        <option value="comp-h">Competitor Hospital</option>
+        <option value="hmo">HMO Clinic</option>
+      </select>
+    </div>
+    <div class="af-field" id="af-grp-row">
+      <label id="af-grp-lbl">Hospital Group</label>
+      <select id="af-group">
+        <option value="mph">Metro Pacific Health</option>
+        <option value="ql">Qualimed / HW QualiMed</option>
+        <option value="sl">St. Luke's Medical Center</option>
+        <option value="ace">ACE Medical Centers</option>
+        <option value="mg">Mount Grace Hospitals</option>
+        <option value="oth">Other / Standalone</option>
+      </select>
+    </div>
+    <div class="af-field">
+      <label>Facility Name</label>
+      <input type="text" id="af-name" placeholder="e.g. The Medical City Bacolod">
+    </div>
+    <div class="af-field">
+      <label>City / Location</label>
+      <input type="text" id="af-city" placeholder="e.g. Bacolod City">
+    </div>
+    <div class="af-field">
+      <label>Province</label>
+      <select id="af-prov"></select>
+    </div>
+    <div id="af-place-hint">
+      &#128205; Click anywhere on the map to place the marker
+      <span id="af-coords"></span>
+    </div>
+    <button id="af-submit" onclick="submitAddFac()" disabled>Add to Map</button>
   </div>
 </div>
 
@@ -906,6 +998,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
         <div class="opp-num" id="inum"></div>
         <div class="verdict" id="iverdict"></div>
       </div>
+      <div id="istrat"></div>
       <div id="ifacilities"></div>
     </div>
   </div>
@@ -1016,6 +1109,9 @@ const PD = [
   {n:"Mountain Province",r:"CAR",lat:17.083,lng:120.977,pop:168289,ic:3,pov:28.6,th:0,tc:0,hw:0,hp:0,av:0,mx:0,md:0},
 ];
 
+// Hospital bed density (beds/1,000 pop) — DOH / PSA estimates
+const BEDS={"Metro Manila":3.8,"Ilocos Norte":1.2,"Ilocos Sur":1.1,"La Union":1.4,"Pangasinan":1.1,"Batanes":1.8,"Cagayan":1.0,"Isabela":0.9,"Nueva Vizcaya":1.3,"Quirino":0.8,"Aurora":0.9,"Bataan":1.5,"Bulacan":1.3,"Nueva Ecija":1.0,"Pampanga":1.6,"Tarlac":1.2,"Zambales":1.3,"Batangas":1.2,"Cavite":1.1,"Laguna":1.2,"Quezon":0.8,"Rizal":1.0,"Marinduque":1.0,"Occidental Mindoro":0.8,"Oriental Mindoro":0.9,"Palawan":0.9,"Romblon":1.0,"Albay":1.1,"Camarines Norte":0.8,"Camarines Sur":0.9,"Catanduanes":1.0,"Masbate":0.7,"Sorsogon":0.9,"Aklan":1.0,"Antique":0.9,"Capiz":1.1,"Guimaras":0.9,"Iloilo":1.8,"Negros Occidental":1.3,"Bohol":1.1,"Cebu":2.2,"Negros Oriental":1.0,"Siquijor":1.1,"Biliran":0.8,"Eastern Samar":0.7,"Leyte":1.2,"Northern Samar":0.6,"Samar":0.7,"Southern Leyte":0.9,"Zamboanga del Norte":0.7,"Zamboanga del Sur":0.9,"Zamboanga Sibugay":0.6,"Bukidnon":0.9,"Camiguin":1.1,"Lanao del Norte":0.8,"Misamis Occidental":1.0,"Misamis Oriental":1.6,"Davao de Oro":0.7,"Davao del Norte":1.1,"Davao del Sur":1.9,"Davao Occidental":0.6,"Davao Oriental":0.7,"Cotabato":0.7,"Sarangani":0.6,"South Cotabato":1.1,"Sultan Kudarat":0.6,"Agusan del Norte":0.9,"Agusan del Sur":0.7,"Dinagat Islands":0.6,"Surigao del Norte":0.9,"Surigao del Sur":0.8,"Basilan":0.5,"Lanao del Sur":0.5,"Maguindanao del Norte":0.5,"Maguindanao del Sur":0.5,"Sulu":0.4,"Tawi-Tawi":0.4,"Abra":1.1,"Apayao":0.8,"Benguet":1.5,"Ifugao":0.9,"Kalinga":0.8,"Mountain Province":1.0};
+
 function calcScore(p){
   const popScore=Math.sqrt(p.pop/800000);
   const incomeW={0:0.7,1:1.0,2:1.4,3:1.1,4:0.5,5:0.2,6:0.1}[p.ic]??0.5;
@@ -1023,7 +1119,9 @@ function calcScore(p){
   const ch=p.ch||0;
   const totalPer100k=(p.th*4+p.tc+(p.hw+p.hp+p.av+p.mx+p.md)*0.6+ch*2.5)/(p.pop/100000);
   const gap=1/(totalPer100k+0.25);
-  return popScore*incomeW*povMod*gap;
+  const beds=BEDS[p.n]||1.0;
+  const bedMod=1+Math.max(0,(2.0-beds)/2.0)*0.25;
+  return popScore*incomeW*povMod*gap*bedMod;
 }
 const rawMax=Math.max(...PD.map(calcScore));
 PD.forEach(p=>{p.score=Math.round(calcScore(p)/rawMax*100);});
@@ -1289,6 +1387,201 @@ function toggleOppSection(){
   chev.classList.toggle('down');
 }
 
+
+// ── STRATEGIC RECOMMENDATION ──
+function getStratRec(p){
+  const s=p.score;
+  const tmc=p.th+p.tc;
+  const comp=p.hw+p.hp+p.av+p.mx+p.md+(p.ch||0);
+  const beds=BEDS[p.n]||1.0;
+  if(s>70&&p.ic<=1&&tmc===0)
+    return{badge:'Priority Target',cls:'sb-priority',text:'Large, economically viable population with zero TMC presence and high bed-density gap. Recommend immediate feasibility study for a full-service hospital or ambulatory care flagship.'};
+  if(s>70&&tmc>0)
+    return{badge:'Expand',cls:'sb-expand',text:'Existing TMC footprint validates the market. High opportunity score suggests the catchment can absorb additional capacity — consider a second hospital or accelerated clinic rollout.'};
+  if(s>55&&tmc===0&&comp<3)
+    return{badge:'Priority Target',cls:'sb-priority',text:'Strong underserved market with minimal competition. A TMC hospital or flagship clinic would face little direct rivalry. Prioritise catchment mapping and HMO partnership outreach.'};
+  if(s>45&&comp>=6)
+    return{badge:'Competitive Entry',cls:'sb-expand',text:'Attractive market with established hospital groups already present. TMC entry should lead with differentiation — quaternary services, specialist centres, or exclusive HMO contracts.'};
+  if(s>35&&beds<1.0)
+    return{badge:'Monitor',cls:'sb-monitor',text:'Low bed density ('+beds.toFixed(1)+'/1,000) signals a structurally underserved province despite a moderate score. A lean Day Surgery/Ambulatory Care model could be viable with limited capital.'};
+  if(p.ic>=3&&p.pop>900000)
+    return{badge:'Caution',cls:'sb-caution',text:'Large population but lower-income profile limits private healthcare uptake. A PhilHealth-anchored revenue model or public-private partnership would be needed to achieve viability.'};
+  if(s<=20)
+    return{badge:'Low Priority',cls:'sb-pass',text:'Currently low priority — either well-served by existing facilities, limited economic base, or insufficient population density for a standalone TMC investment.'};
+  return{badge:'Monitor',cls:'sb-monitor',text:'Moderate opportunity. Track population growth, new HMO penetration, and competitor moves. Consider adding to a regional cluster if a neighbouring province becomes a primary site.'};
+}
+
+// ── CATCHMENT RINGS ──
+let catchmentLayer=null;
+function toggleCatchment(show){
+  if(show){
+    if(!catchmentLayer){
+      catchmentLayer=L.featureGroup();
+      TMC_H.forEach(function(h){
+        L.circle([h.lat,h.lng],{
+          radius:50000,color:'#4a9eff',weight:1.5,
+          dashArray:'6 4',fillColor:'#4a9eff',fillOpacity:0.04,
+          interactive:false
+        }).bindTooltip(h.n+' — 50 km catchment',{sticky:true}).addTo(catchmentLayer);
+      });
+      // Also add user-added TMC hospitals
+      userFacs.filter(function(f){return f.type==='tmc-h';}).forEach(function(f){
+        L.circle([f.lat,f.lng],{
+          radius:50000,color:'#4a9eff',weight:1.5,
+          dashArray:'6 4',fillColor:'#4a9eff',fillOpacity:0.04,
+          interactive:false
+        }).addTo(catchmentLayer);
+      });
+    }
+    catchmentLayer.addTo(map);
+  }else{
+    if(catchmentLayer)map.removeLayer(catchmentLayer);
+  }
+}
+
+// ── REGION BOUNDARIES ──
+let regionLayer=null;
+function convexHull(pts){
+  if(pts.length<3)return pts;
+  pts=pts.slice().sort(function(a,b){return a[0]!==b[0]?a[0]-b[0]:a[1]-b[1];});
+  function cross(O,A,B){return(A[0]-O[0])*(B[1]-O[1])-(A[1]-O[1])*(B[0]-O[0]);}
+  const lower=[];
+  for(let i=0;i<pts.length;i++){const p=pts[i];while(lower.length>=2&&cross(lower[lower.length-2],lower[lower.length-1],p)<=0)lower.pop();lower.push(p);}
+  const upper=[];
+  for(let i=pts.length-1;i>=0;i--){const p=pts[i];while(upper.length>=2&&cross(upper[upper.length-2],upper[upper.length-1],p)<=0)upper.pop();upper.push(p);}
+  lower.pop();upper.pop();
+  return lower.concat(upper);
+}
+function toggleRegions(show){
+  if(show){
+    if(!regionLayer){
+      regionLayer=L.featureGroup();
+      const regs={};
+      PD.forEach(function(p){if(!regs[p.r])regs[p.r]=[];regs[p.r].push([p.lat,p.lng]);});
+      Object.keys(regs).forEach(function(name){
+        const pts=regs[name];
+        if(pts.length<2)return;
+        const hull=convexHull(pts.slice());
+        const cLat=hull.reduce(function(s,p){return s+p[0];},0)/hull.length;
+        const cLng=hull.reduce(function(s,p){return s+p[1];},0)/hull.length;
+        const exp=hull.map(function(p){return[cLat+(p[0]-cLat)*1.18,cLng+(p[1]-cLng)*1.18];});
+        L.polygon(exp,{
+          color:isDark?'rgba(255,255,255,0.22)':'rgba(0,0,0,0.18)',
+          weight:1,fillOpacity:0,interactive:false
+        }).bindTooltip(name,{permanent:false,sticky:true,className:'leaflet-tooltip'}).addTo(regionLayer);
+      });
+    }
+    regionLayer.addTo(map);
+  }else{
+    if(regionLayer)map.removeLayer(regionLayer);
+  }
+}
+
+// ── ADD FACILITY ──
+let afLat=null,afLng=null;
+const userFacs=[];
+
+function openAddFac(){
+  // Populate province dropdown once
+  const sel=document.getElementById('af-prov');
+  if(sel.options.length===0){
+    PD.forEach(function(p){
+      const o=document.createElement('option');
+      o.value=p.n;o.textContent=p.n+' ('+p.r+')';
+      sel.appendChild(o);
+    });
+  }
+  afLat=null;afLng=null;
+  document.getElementById('af-coords').textContent='';
+  document.getElementById('af-submit').disabled=true;
+  document.getElementById('af-name').value='';
+  document.getElementById('af-city').value='';
+  document.getElementById('add-fac-panel').classList.add('open');
+  document.body.classList.add('placing-fac');
+}
+function closeAddFac(){
+  document.getElementById('add-fac-panel').classList.remove('open');
+  document.body.classList.remove('placing-fac');
+  afLat=null;afLng=null;
+}
+function updateAfType(){
+  const t=document.getElementById('af-type').value;
+  const grpRow=document.getElementById('af-grp-row');
+  const grpLbl=document.getElementById('af-grp-lbl');
+  if(t==='comp-h'){grpRow.style.display='';grpLbl.textContent='Hospital Group';}
+  else if(t==='hmo'){grpRow.style.display='';grpLbl.textContent='HMO Network';}
+  else grpRow.style.display='none';
+}
+function submitAddFac(){
+  const type=document.getElementById('af-type').value;
+  const name=document.getElementById('af-name').value.trim()||'New Facility';
+  const city=document.getElementById('af-city').value.trim()||'Philippines';
+  const provName=document.getElementById('af-prov').value;
+  const grp=document.getElementById('af-group').value;
+  if(!afLat){alert('Click the map to place the marker first.');return;}
+  // Build marker
+  let marker,grpKey;
+  if(type==='tmc-h'){
+    marker=L.marker([afLat,afLng],{icon:makeIcon(
+      '<div style="background:#0a2448;border:2.5px solid #4a9eff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 0 12px rgba(74,158,255,.7)">&#127973;</div>',
+      [28,28])}).addTo(map);
+    marker.bindPopup('<b>&#127973; '+name+'</b><br><small>'+city+' (User-added)</small>');
+    markerGroups.tmc.push(marker);
+    grpKey='tmc-h';
+  } else if(type==='tmc-c'){
+    marker=L.marker([afLat,afLng],{icon:makeIcon(
+      '<div style="background:#0d2a52;border:1.5px solid #4a9eff;border-radius:4px;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#90c8ff">C</div>',
+      [18,18])}).addTo(map);
+    marker.bindPopup('<b>'+name+'</b><br><small>'+city+' (User-added)</small>');
+    markerGroups.tmc.push(marker);
+    grpKey='tmc-c';
+  } else if(type==='comp-h'){
+    const col=HOSP_COLORS[grp]||'#a0aec0';
+    function hospIconLocal(c){return makeIcon('<div style="background:'+c+'18;border:2px solid '+c+';border-radius:4px;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px;box-shadow:0 0 5px '+c+'55">&#127973;</div>',[20,20]);}
+    marker=L.marker([afLat,afLng],{icon:hospIconLocal(col)}).addTo(map);
+    marker.bindPopup('<b style="color:'+col+'">&#9632; '+name+'</b><br><small>'+city+' (User-added)</small>');
+    if(!markerGroups[grp])markerGroups[grp]=[];
+    markerGroups[grp].push(marker);
+    grpKey=grp;
+  } else {
+    // HMO
+    const hmoGrp=document.getElementById('af-group').value;
+    const col=COMP_COLORS[hmoGrp]||'#aaa';
+    marker=L.marker([afLat,afLng],{icon:makeIcon(
+      '<div style="background:'+col+'22;border:2px solid '+col+';border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:'+col+'">H</div>',
+      [20,20])}).addTo(map);
+    marker.bindPopup('<b>'+name+'</b><br><small>'+city+' (User-added)</small>');
+    if(!markerGroups[hmoGrp])markerGroups[hmoGrp]=[];
+    markerGroups[hmoGrp].push(marker);
+    grpKey=hmoGrp;
+  }
+  // Update province data
+  const provData=PD.find(function(p){return p.n===provName;});
+  if(provData){
+    if(type==='tmc-h')provData.th++;
+    else if(type==='tmc-c')provData.tc++;
+    else if(type==='comp-h')provData.ch=(provData.ch||0)+1;
+    else{const hg=document.getElementById('af-group').value;if(provData[hg]!==undefined)provData[hg]++;}
+  }
+  // Store in userFacs for catchment ring refresh
+  userFacs.push({name:name,city:city,lat:afLat,lng:afLng,type:type,grp:grpKey});
+  // Recalculate scores
+  const newMax=Math.max.apply(null,PD.map(calcScore));
+  PD.forEach(function(p){p.score=Math.round(calcScore(p)/newMax*100);});
+  refreshBubbleColors();
+  renderRankings();
+  buildProvFacs();
+  // Rebuild catchment if visible
+  if(document.getElementById('catchment-toggle').checked){
+    if(catchmentLayer)map.removeLayer(catchmentLayer);
+    catchmentLayer=null;
+    toggleCatchment(true);
+  }
+  closeAddFac();
+  // Flash the placed marker
+  if(marker){marker.openPopup();}
+}
+
 // ── THEME ──
 let isDark=true;
 let tileLayer=null;
@@ -1319,6 +1612,18 @@ let provMarkers=[];
 
 const map=L.map('map',{center:[12.0,122.0],zoom:6,minZoom:5,maxZoom:13,zoomControl:false});
 L.control.zoom({position:'bottomleft'}).addTo(map);
+map.on('click',function(e){
+  if(!document.body.classList.contains('placing-fac'))return;
+  afLat=parseFloat(e.latlng.lat.toFixed(5));
+  afLng=parseFloat(e.latlng.lng.toFixed(5));
+  document.getElementById('af-coords').textContent='Lat '+afLat+', Lng '+afLng;
+  document.getElementById('af-submit').disabled=false;
+  // Auto-select nearest province
+  const nearest=nearestProv(afLat,afLng);
+  const sel=document.getElementById('af-prov');
+  for(let i=0;i<sel.options.length;i++){if(sel.options[i].value===nearest){sel.selectedIndex=i;break;}}
+});
+
 swapTiles();
 
 // ── PROVINCE BUBBLES ──
@@ -1438,6 +1743,7 @@ function toggleGroup(g,show){
 
 // ── INFO PANEL ──
 function showInfo(p){
+  const beds=BEDS[p.n]||1.0;
   const icLbl={0:'Special/NCR',1:'Class 1 (Highest)',2:'Class 2',3:'Class 3',4:'Class 4',5:'Class 5',6:'Class 6 (Lowest)'}[p.ic]||'--';
   const comp=p.hw+p.hp+p.av+p.mx+p.md;
   const tmc=p.th+p.tc;
@@ -1458,7 +1764,8 @@ function showInfo(p){
     <div class="irow"><span class="il">Maxicare PCCs</span><span class="iv ${p.mx?'w':'g'}">${p.mx}</span></div>
     <div class="irow"><span class="il">Medicard</span><span class="iv ${p.md?'w':'g'}">${p.md}</span></div>
     <div class="irow"><span class="il">All Competitors</span><span class="iv ${cc}">${comp}</span></div>
-    <div class="irow"><span class="il">Competitor Hospitals</span><span class="iv ${p.ch?'b':'g'}">${p.ch||0}</span></div>`;
+    <div class="irow"><span class="il">Competitor Hospitals</span><span class="iv ${p.ch?'b':'g'}">${p.ch||0}</span></div>
+    <div class="irow"><span class="il">Bed Density (/1k pop)</span><span class="iv ${beds<1.0?'b':beds<2.0?'w':'g'}">${beds.toFixed(1)}</span></div>`;
   const s=p.score;
   const fc=s>70?'#d73027':s>50?'#f46d43':s>35?'#fdae61':s>20?'#38a169':'#3182ce';
   document.getElementById('ifill').style.cssText=`width:${s}%;background:${fc}`;
@@ -1473,6 +1780,11 @@ function showInfo(p){
   const vEl=document.getElementById('iverdict');
   vEl.className=`verdict ${vc}`;
   vEl.textContent=verdict;
+  // ── STRATEGIC RECOMMENDATION ──
+  const rec=getStratRec(p);
+  document.getElementById('istrat').innerHTML='<div class="strat-section"><div class="strat-lbl">Strategic View</div>'
+    +'<span class="strat-badge '+rec.cls+'">'+rec.badge+'</span>'
+    +'<div class="strat-text">'+rec.text+'</div></div>';
   // ── FACILITY LIST ──
   const facs=PROV_FACS[p.n]||[];
   const facEl=document.getElementById('ifacilities');
@@ -1526,6 +1838,7 @@ function focusProv(name){
 }
 
 buildProvFacs();
+updateAfType();
 buildProvinceMarkers();
 buildSiteMarkers();
 renderRankings();
